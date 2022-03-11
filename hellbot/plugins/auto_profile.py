@@ -15,7 +15,7 @@ DEL_TIME_OUT = 60
 async def _(event):
     hell = await eor(event, "`Starting AutoName Please Wait`")
     _id, HELL_USER, _ment = await client_id(event)
-    await hell.edit(f"Auto Name has been started my Master")
+    await hell.edit("Auto Name has been started my Master")
     await event.client.send_message(Config.LOGGER_ID, "#AUTONAME \n\nAutoname Started!!")
     while True:
         HB = time.strftime("%d-%m-%y")
@@ -61,9 +61,11 @@ async def _(event):
 @hell_cmd(pattern="reserved$")
 async def mine(event):
     result = await event.client(GetAdminedPublicChannelsRequest())
-    output_str = ""
-    for channel_obj in result.chats:
-        output_str += f"{channel_obj.title}\n@{channel_obj.username}\n\n"
+    output_str = "".join(
+        f"{channel_obj.title}\n@{channel_obj.username}\n\n"
+        for channel_obj in result.chats
+    )
+
     await eor(event, output_str)
 
 

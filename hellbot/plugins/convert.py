@@ -21,10 +21,7 @@ async def _(event):
     if not event.reply_to_msg_id:
         return await eod(event, "Reply to animated sticker to make gif.")
     hell = await eor(event, "Converting...")
-    if event.pattern_match.group(1):
-        quality = event.pattern_match.group(1)
-    else:
-        quality = 512
+    quality = event.pattern_match.group(1) or 512
     rply = await event.get_reply_message()
     hell_ = await event.client.download_media(rply.media)
     gifs = tgs_to_gif(hell_, quality)
@@ -34,9 +31,7 @@ async def _(event):
 
 @hell_cmd(pattern="stoi$")
 async def _(hell):
-    reply_to_id = hell.message.id
-    if hell.reply_to_msg_id:
-        reply_to_id = hell.reply_to_msg_id
+    reply_to_id = hell.reply_to_msg_id or hell.message.id
     event = await eor(hell, "Converting.....")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
@@ -66,9 +61,7 @@ async def _(hell):
 
 @hell_cmd(pattern="itos$")
 async def _(hell):
-    reply_to_id = hell.message.id
-    if hell.reply_to_msg_id:
-        reply_to_id = hell.reply_to_msg_id
+    reply_to_id = hell.reply_to_msg_id or hell.message.id
     event = await eor(hell, "Converting.....")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
@@ -148,9 +141,7 @@ async def on_file_to_photo(event):
 
 @hell_cmd(pattern="itof$")
 async def _(hell):
-    reply_to_id = hell.message.id
-    if hell.reply_to_msg_id:
-        reply_to_id = hell.reply_to_msg_id
+    reply_to_id = hell.reply_to_msg_id or hell.message.id
     event = await eor(hell, "Converting.....")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
@@ -211,19 +202,18 @@ async def _(event):
     else:
         end = datetime.datetime.now()
         ms = (end - start).seconds
-        await eor(event,
-            "Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms)
-        )
+        await eor(event, f"Downloaded to `{downloaded_file_name}` in {ms} seconds.")
         new_required_file_name = ""
         new_required_file_caption = ""
         command_to_run = []
         voice_note = False
         supports_streaming = False
         if input_str == "voice":
-            new_required_file_caption = "voice_" + str(round(time.time())) + ".opus"
+            new_required_file_caption = f"voice_{str(round(time.time()))}.opus"
             new_required_file_name = (
-                Config.TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
+                f'{Config.TMP_DOWNLOAD_DIRECTORY}/{new_required_file_caption}'
             )
+
             command_to_run = [
                 "ffmpeg",
                 "-i",
@@ -241,10 +231,11 @@ async def _(event):
             voice_note = True
             supports_streaming = True
         elif input_str == "mp3":
-            new_required_file_caption = "mp3_" + str(round(time.time())) + ".mp3"
+            new_required_file_caption = f"mp3_{str(round(time.time()))}.mp3"
             new_required_file_name = (
-                Config.TMP_DOWNLOAD_DIRECTORY + "/" + new_required_file_caption
+                f'{Config.TMP_DOWNLOAD_DIRECTORY}/{new_required_file_caption}'
             )
+
             command_to_run = [
                 "ffmpeg",
                 "-i",

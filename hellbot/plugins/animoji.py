@@ -111,7 +111,7 @@ async def _(event):
 @hell_cmd(pattern="lovestory$")
 async def _(event):
     animation_interval = 3
-    animation_ttl = range(0, 103)
+    animation_ttl = range(103)
     await eor(event, "Let me tel you")
     animation_chars = [
         "1 ❤️ love story",
@@ -233,7 +233,7 @@ async def _(event):
 @hell_cmd(pattern="fuck$")
 async def _(event):
     animation_interval = 1
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
     await eor(event, "fuk")
     animation_chars = ["👉       ✊️", "👉     ✊️", "👉  ✊️", "👉✊️💦"]
     for i in animation_ttl:
@@ -244,7 +244,7 @@ async def _(event):
 @hell_cmd(pattern="sux$")
 async def _(event):
     animation_interval = 1
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
     await eor(event, "sux")
     animation_chars = ["🤵       👰", "🤵     👰", "🤵  👰", "🤵👼👰"]
     for i in animation_ttl:
@@ -255,7 +255,7 @@ async def _(event):
 @hell_cmd(pattern="kiss$")
 async def _(event):
     animation_interval = 1
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
     await eor(event, "kiss")
     animation_chars = ["🤵       👰", "🤵     👰", "🤵  👰", "🤵💋👰"]
     for i in animation_ttl:

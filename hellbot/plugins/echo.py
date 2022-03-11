@@ -17,9 +17,11 @@ async def echo(event):
         reply_msg = await event.get_reply_message()
         user_id = reply_msg.sender_id
         chat_id = event.chat_id
-        if is_echo(user_id, chat_id):
-            if gvarstat(f"ECHO_{ForGo10God}") == "True":
-                return await eod(event, "The user is already enabled with echo !")
+        if (
+            is_echo(user_id, chat_id)
+            and gvarstat(f"ECHO_{ForGo10God}") == "True"
+        ):
+            return await eod(event, "The user is already enabled with echo !")
         addecho(user_id, chat_id)
         addgvar(f"ECHO_{ForGo10God}", "True")
         await eor(event, "**Hello 👋**")
@@ -64,11 +66,13 @@ async def samereply(event):
         return
     id_ = await H1.get_me()
     uid = get_peer_id(id_)
-    if is_echo(event.sender_id, event.chat_id):
-        if gvarstat(f"ECHO_{uid}") == "True":
-            await asyncio.sleep(1)
-            if event.message.text or event.message.sticker:
-                await event.reply(event.message)
+    if (
+        is_echo(event.sender_id, event.chat_id)
+        and gvarstat(f"ECHO_{uid}") == "True"
+    ):
+        await asyncio.sleep(1)
+        if event.message.text or event.message.sticker:
+            await event.reply(event.message)
 
 
 if H2:
@@ -78,11 +82,13 @@ if H2:
             return
         id_ = await H2.get_me()
         uid = get_peer_id(id_)
-        if is_echo(event.sender_id, event.chat_id):
-            if gvarstat(f"ECHO_{uid}") == "True":
-                await asyncio.sleep(1)
-                if event.message.text or event.message.sticker:
-                    await event.reply(event.message)
+        if (
+            is_echo(event.sender_id, event.chat_id)
+            and gvarstat(f"ECHO_{uid}") == "True"
+        ):
+            await asyncio.sleep(1)
+            if event.message.text or event.message.sticker:
+                await event.reply(event.message)
 
 
 if H3:
@@ -92,11 +98,13 @@ if H3:
             return
         id_ = await H3.get_me()
         uid = get_peer_id(id_)
-        if is_echo(event.sender_id, event.chat_id):
-            if gvarstat(f"ECHO_{uid}") == "True":
-                await asyncio.sleep(1)
-                if event.message.text or event.message.sticker:
-                    await event.reply(event.message)
+        if (
+            is_echo(event.sender_id, event.chat_id)
+            and gvarstat(f"ECHO_{uid}") == "True"
+        ):
+            await asyncio.sleep(1)
+            if event.message.text or event.message.sticker:
+                await event.reply(event.message)
 
 
 if H4:
@@ -106,11 +114,13 @@ if H4:
             return
         id_ = await H4.get_me()
         uid = get_peer_id(id_)
-        if is_echo(event.sender_id, event.chat_id):
-            if gvarstat(f"ECHO_{uid}") == "True":
-                await asyncio.sleep(1)
-                if event.message.text or event.message.sticker:
-                    await event.reply(event.message)
+        if (
+            is_echo(event.sender_id, event.chat_id)
+            and gvarstat(f"ECHO_{uid}") == "True"
+        ):
+            await asyncio.sleep(1)
+            if event.message.text or event.message.sticker:
+                await event.reply(event.message)
 
 
 if H5:
@@ -120,11 +130,13 @@ if H5:
             return
         id_ = await H5.get_me()
         uid = get_peer_id(id_)
-        if is_echo(event.sender_id, event.chat_id):
-            if gvarstat(f"ECHO_{uid}") == "True":
-                await asyncio.sleep(1)
-                if event.message.text or event.message.sticker:
-                    await event.reply(event.message)
+        if (
+            is_echo(event.sender_id, event.chat_id)
+            and gvarstat(f"ECHO_{uid}") == "True"
+        ):
+            await asyncio.sleep(1)
+            if event.message.text or event.message.sticker:
+                await event.reply(event.message)
 
 
 CmdHelp("echo").add_command(

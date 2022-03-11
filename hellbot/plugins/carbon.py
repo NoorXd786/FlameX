@@ -124,7 +124,7 @@ async def carbon_api(e):
         k_skeme.send_keys(Keys.ENTER)
     else:
         color_scheme = str(random.randint(1, 29))
-        driver.find_element_by_id(("downshift-0-item-" + color_scheme)).click()
+        driver.find_element_by_id(f"downshift-0-item-{color_scheme}").click()
     driver.find_element_by_id("export-menu").click()
     driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
     driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
@@ -251,10 +251,11 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your Karbon2",
+        caption="Here's your Karbon2",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
 
     os.remove("./carbon.png")
     await hell.delete()
@@ -310,10 +311,11 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your Karbon3",
+        caption="Here's your Karbon3",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
 
     os.remove("./carbon.png")
     await hell.delete()
@@ -369,10 +371,11 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your Karbon4 ",
+        caption="Here's your Karbon4 ",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
 
     os.remove("./carbon.png")
     await hell.delete()
@@ -432,10 +435,11 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your karbonrgb",
+        caption="Here's your karbonrgb",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
     os.remove("./carbon.png")
     await hell.delete()
 
@@ -524,10 +528,11 @@ async def carbon_api(e):
     await e.client.send_file(
         e.chat_id,
         file,
-        caption=f"Here's your karbonrgb",
+        caption="Here's your karbonrgb",
         force_document=True,
         reply_to=e.message.reply_to_msg_id,
     )
+
     os.remove("./carbon.png")
     await hell.delete()
 

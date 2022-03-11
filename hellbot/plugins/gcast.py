@@ -26,8 +26,6 @@ async def _(event):
                 if chat != -1001496036895:
                     await event.client.send_message(chat, hell, file=file)
                     owo += 1
-                elif chat == -1001496036895:
-                    pass
             except BaseException:
                 sed += 1
     elif "-pvt" in flag:
@@ -55,8 +53,6 @@ async def _(event):
                     if chat != -1001496036895:
                         await event.client.send_message(chat, hell, file=file)
                         owo += 1
-                    elif chat == -1001496036895:
-                        pass
                 except BaseException:
                     sed += 1
     else:

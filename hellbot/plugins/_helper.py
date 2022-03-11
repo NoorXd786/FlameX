@@ -31,8 +31,8 @@ async def repo(event):
 @hell_cmd(pattern="help$")
 async def _(event):
     tgbotusername = Config.BOT_USERNAME
-    chat = "@Botfather"
     if tgbotusername is not None:
+        chat = "@Botfather"
         try:
             results = await event.client.inline_query(tgbotusername, "hellbot_help")
             await results[0].click(
@@ -62,8 +62,7 @@ async def _(event):
 
 @hell_cmd(pattern="plinfo(?:\s|$)([\s\S]*)")
 async def hellbott(event):
-    args = event.pattern_match.group(1).lower()
-    if args:
+    if args := event.pattern_match.group(1).lower():
         if args in CMD_HELP:
             await eor(event, str(CMD_HELP[args]))
         else:
@@ -76,12 +75,9 @@ async def hellbott(event):
         ]
 
         for i in sayfa:
-            string += f"`📌 `"
+            string += "`📌 `"
             for sira, a in enumerate(i):
-                string += "`" + str(a)
-                if sira == i.index(i[-1]):
-                    string += "`"
-                else:
-                    string += "`, "
+                string += f"`{str(a)}"
+                string += "`" if sira == i.index(i[-1]) else "`, "
             string += "\n"
         await eor(event, "Please Specify A Module Name Of Which You Want Info" + "\n\n" + string)

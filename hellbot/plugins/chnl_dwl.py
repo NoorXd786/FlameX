@@ -28,7 +28,7 @@ async def get_media(event):
     output = str(output)
     output = output.replace("b'", "")
     output = output.replace("\n'", "")
-    await hell.edit("Downloaded " + output + " files.")
+    await hell.edit(f"Downloaded {output} files.")
 
 
 @hell_cmd(pattern="geta ([\s\S]*)")
@@ -55,7 +55,7 @@ async def get_media(event):
     output = str(output)
     output = output.replace("b'", "")
     output = output.replace("\n'", "")
-    await hell.edit("Downloaded " + output + " files.")
+    await hell.edit(f"Downloaded {output} files.")
 
 
 CmdHelp("chnl_dwl").add_command(

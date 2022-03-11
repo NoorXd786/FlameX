@@ -35,7 +35,7 @@ async def _(event):
         offset = (x, y)
         background.paste(mask, offset, mask=mask)
     file_name = "thug.png"
-    ok = dwllpath + "/" + file_name
+    ok = f'{dwllpath}/{file_name}'
     background.save(ok, "PNG")
     await event.client.send_file(event.chat_id, ok)
     await hell.delete()
@@ -111,7 +111,7 @@ async def _(event):
     senderr = await event.client(GetFullUserRequest(owo.sender_id))
     if not senderr.profile_photo:
         imglink = 'https://telegra.ph/file/93e181ec03a3761a63918.jpg'
-    elif senderr.profile_photo:
+    else:
         img = await event.client.download_media(senderr.profile_photo, dwllpath)
         url_s = upload_file(img)
         imglink = f"https://telegra.ph{url_s[0]}"

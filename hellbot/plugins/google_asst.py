@@ -56,7 +56,7 @@ async def _(event):
     lan = lan.strip()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
-    required_file_name = Config.TMP_DOWNLOAD_DIRECTORY + "voice.ogg"
+    required_file_name = f'{Config.TMP_DOWNLOAD_DIRECTORY}voice.ogg'
     try:
         tts = gTTS(text, lang=lan)
         tts.save(required_file_name)
@@ -72,8 +72,9 @@ async def _(event):
             "100k",
             "-vbr",
             "on",
-            required_file_name + ".opus",
+            f'{required_file_name}.opus',
         ]
+
         try:
             t_response = subprocess.check_output(
                 command_to_execute, stderr=subprocess.STDOUT
@@ -82,17 +83,18 @@ async def _(event):
             await hell.edit(str(exc))
         else:
             os.remove(required_file_name)
-            required_file_name = required_file_name + ".opus"
+            required_file_name = f'{required_file_name}.opus'
         end = datetime.datetime.now()
         ms = (end - start).seconds
         await event.client.send_file(
             event.chat_id,
             required_file_name,
-            caption=f"**• Voiced :** `{text[0:97]}....` \n**• Language :** `{lan}` \n**• Time Taken :** `{ms} seconds`",
+            caption=f"**• Voiced :** `{text[:97]}....` \n**• Language :** `{lan}` \n**• Time Taken :** `{ms} seconds`",
             reply_to=event.message.reply_to_msg_id,
             allow_cache=False,
             voice_note=True,
         )
+
         os.remove(required_file_name)
         await hell.delete()
     except Exception as e:

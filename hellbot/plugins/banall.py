@@ -120,13 +120,13 @@ async def _(event):
                 functions.channels.EditBannedRequest(event.chat_id, i, rights)
             )
         except FloodWaitError as ex:
-            logger.warn("sleeping for {} seconds".format(ex.seconds))
+            logger.warn(f"sleeping for {ex.seconds} seconds")
             sleep(ex.seconds)
         except Exception as ex:
             await xyz.edit(str(ex))
         else:
             p += 1
-    await xyz.edit("{}: {} unbanned".format(event.chat_id, p))
+    await xyz.edit(f"{event.chat_id}: {p} unbanned")
 
 
 @hell_cmd(pattern="ikuck(?:\s|$)([\s\S]*)")

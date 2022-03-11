@@ -46,14 +46,14 @@ async def find_cot(event):
 @hell_cmd(pattern="square(?:\s|$)([\s\S]*)")
 async def square(event):
     input_str = float(event.text[8:])
-    output = input_str * input_str
+    output = input_str**2
     await eor(event, f"**Square of** `{input_str}`==\n`{output}`")
 
 
 @hell_cmd(pattern="cube(?:\s|$)([\s\S]*)")
 async def cube(event):
-    input_str = float(event.text[6:])  
-    output = input_str * input_str * input_str
+    input_str = float(event.text[6:])
+    output = input_str**2 * input_str
     await eor(event, f"**Cube of** `{input_str}`==\n`{output}`")
 
 

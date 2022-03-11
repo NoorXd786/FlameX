@@ -14,11 +14,10 @@ async def _(event):
     url = "https://thispersondoesnotexist.com/image"
     response = requests.get(url)
     hell = await eor(event, "`Creating a fake face...`")
-    if response.status_code == 200:
-      with open("HELLBOT.jpg", 'wb') as f:
-        f.write(response.content)
-    else:
+    if response.status_code != 200:
         return await eod(hell, "Failed to create Fake Face! Try again later.")
+    with open("HELLBOT.jpg", 'wb') as f:
+      f.write(response.content)
     captin = f"Fake Image By {hell_mention}"
     fole = "HELLBOT.jpg"
     await event.client.send_file(event.chat_id, fole, caption=captin, force_document=False)
@@ -29,10 +28,7 @@ async def _(event):
 @hell_cmd(pattern="fake ([\s\S]*)")
 async def _(event):
     await event.delete()
-    input_str = event.pattern_match.group(1)
-    action = "typing"
-    if input_str:
-        action = input_str
+    action = input_str if (input_str := event.pattern_match.group(1)) else "typing"
     async with event.client.action(event.chat_id, action):
         await asyncio.sleep(86400)
 
@@ -42,7 +38,6 @@ async def gbun(event):
     gbunVar = event.text
     gbunVar = gbunVar[6:]
     mentions = "`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By Admin...\n`"
-    no_reason = "**Reason:**  __Madarchod Saala__"
     hell = await eor(event, "** Nikal Lawde❗️⚜️☠️**")
     asyncio.sleep(3.5)
     chat = await event.get_input_chat()
@@ -65,15 +60,16 @@ async def gbun(event):
                 "**Person's Name: ** __{}__\n"
                 "**ID : ** `{}`\n"
             ).format(firstname, idd, firstname, idd)
-            if usname == None:
+            if usname is None:
                 jnl += "**Victim Nigga's username: ** `Doesn't own a username!`\n"
             elif usname != "None":
                 jnl += "**Victim Nigga's username** : @{}\n".format(usname)
             if len(gbunVar) > 0:
-                gbunm = "`{}`".format(gbunVar)
-                gbunr = "**Reason: **" + gbunm
+                gbunm = f"`{gbunVar}`"
+                gbunr = f"**Reason: **{gbunm}"
                 jnl += gbunr
             else:
+                no_reason = "**Reason:**  __Madarchod Saala__"
                 jnl += no_reason
             await hell.edit(jnl)
     else:

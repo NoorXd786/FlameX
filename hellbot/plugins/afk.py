@@ -124,7 +124,9 @@ async def _(event):
         if owo == "":
             addgvar("AFK", "YES")
             x = await event.client.send_message(
-                event.chat_id, f"**I'm going afk🚶**", file=hellpic)
+                event.chat_id, "**I'm going afk🚶**", file=hellpic
+            )
+
             try:
                 await unsave_gif(event, x)
             except:
@@ -134,8 +136,10 @@ async def _(event):
             try:
                 xy = await event.client.send_message(
                     Config.LOGGER_ID,
-                    f"#AFKTRUE \n**AFK mode** = `True`\n**Reason:** `Not Mentioned`",file=hellpic
-                    )
+                    "#AFKTRUE \\n**AFK mode** = `True`\\n**Reason:** `Not Mentioned`",
+                    file=hellpic,
+                )
+
                 try:
                     await unsave_gif(event, xy)
                 except:
@@ -273,7 +277,9 @@ if H2:
             if owo == "":
                 addgvar("AFK2", "YES")
                 x = await event.client.send_message(
-                    event.chat_id, f"**I'm going afk🚶**", file=hellpic)
+                    event.chat_id, "**I'm going afk🚶**", file=hellpic
+                )
+
                 try:
                     await unsave_gif(event, x)
                 except:
@@ -283,8 +289,10 @@ if H2:
                 try:
                     xy = await event.client.send_message(
                         Config.LOGGER_ID,
-                        f"#AFKTRUE \n**AFK mode** = `True`\n**Reason:** `Not Mentioned`",file=hellpic
-                        )
+                        "#AFKTRUE \\n**AFK mode** = `True`\\n**Reason:** `Not Mentioned`",
+                        file=hellpic,
+                    )
+
                     try:
                         await unsave_gif(event, xy)
                     except:
@@ -422,7 +430,9 @@ if H3:
             if owo == "":
                 addgvar("AFK3", "YES")
                 x = await event.client.send_message(
-                    event.chat_id, f"**I'm going afk🚶**", file=hellpic)
+                    event.chat_id, "**I'm going afk🚶**", file=hellpic
+                )
+
                 try:
                     await unsave_gif(event, x)
                 except:
@@ -432,8 +442,10 @@ if H3:
                 try:
                     xy = await event.client.send_message(
                         Config.LOGGER_ID,
-                        f"#AFKTRUE \n**AFK mode** = `True`\n**Reason:** `Not Mentioned`",file=hellpic
-                        )
+                        "#AFKTRUE \\n**AFK mode** = `True`\\n**Reason:** `Not Mentioned`",
+                        file=hellpic,
+                    )
+
                     try:
                         await unsave_gif(event, xy)
                     except:
@@ -571,7 +583,9 @@ if H4:
             if owo == "":
                 addgvar("AFK4", "YES")
                 x = await event.client.send_message(
-                    event.chat_id, f"**I'm going afk🚶**", file=hellpic)
+                    event.chat_id, "**I'm going afk🚶**", file=hellpic
+                )
+
                 try:
                     await unsave_gif(event, x)
                 except:
@@ -581,8 +595,10 @@ if H4:
                 try:
                     xy = await event.client.send_message(
                         Config.LOGGER_ID,
-                        f"#AFKTRUE \n**AFK mode** = `True`\n**Reason:** `Not Mentioned`",file=hellpic
-                        )
+                        "#AFKTRUE \\n**AFK mode** = `True`\\n**Reason:** `Not Mentioned`",
+                        file=hellpic,
+                    )
+
                     try:
                         await unsave_gif(event, xy)
                     except:
@@ -720,7 +736,9 @@ if H5:
             if owo == "":
                 addgvar("AFK5", "YES")
                 x = await event.client.send_message(
-                    event.chat_id, f"**I'm going afk🚶**", file=hellpic)
+                    event.chat_id, "**I'm going afk🚶**", file=hellpic
+                )
+
                 try:
                     await unsave_gif(event, x)
                 except:
@@ -730,8 +748,10 @@ if H5:
                 try:
                     xy = await event.client.send_message(
                         Config.LOGGER_ID,
-                        f"#AFKTRUE \n**AFK mode** = `True`\n**Reason:** `Not Mentioned`",file=hellpic
-                        )
+                        "#AFKTRUE \\n**AFK mode** = `True`\\n**Reason:** `Not Mentioned`",
+                        file=hellpic,
+                    )
+
                     try:
                         await unsave_gif(event, xy)
                     except:

@@ -68,9 +68,7 @@ async def add_snip(event):
     if sq.add_note(trigger, stri, cht_id) is False:
         sq.rm_note(trigger)
         if sq.add_note(trigger, stri, cht_id) is False:
-            return await edit_or_reply(
-                event, f"Error Adding Snip.."
-            )
+            return await edit_or_reply(event, "Error Adding Snip..")
         return await eor(event, success.format("updated", trigger))
     return await eor(event, success.format("added", trigger))
 
@@ -83,7 +81,7 @@ async def _(event):
         input_str = input_str.replace("#", "")
     try:
         sq.rm_note(input_str)
-        await eor(event, "Removed  `#{}`  from snips..".format(input_str))
+        await eor(event, f"Removed  `#{input_str}`  from snips..")
     except:
         await eor(event, "No snip saved with this trigger.")
 

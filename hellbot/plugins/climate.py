@@ -96,8 +96,7 @@ async def get_weather(weather):
         return temp[0]
 
     def sun(unix):
-        xx = datetime.datetime.fromtimestamp(unix, tz=ctimezone).strftime("%I:%M %p")
-        return xx
+        return datetime.datetime.fromtimestamp(unix, tz=ctimezone).strftime("%I:%M %p")
     cid = await client_id(weather)
     hell_mention = cid[2]
     await eor(
@@ -140,7 +139,7 @@ async def set_default_city(city):
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
-            CITY = newcity[0].strip() + "," + newcity[1].strip()
+            CITY = f'{newcity[0].strip()},{newcity[1].strip()}'
         else:
             country = await get_tz((newcity[1].strip()).title())
             try:
@@ -148,12 +147,12 @@ async def set_default_city(city):
             except KeyError:
                 await edit_or_reply(city, "`Invalid country.`")
                 return
-            CITY = newcity[0].strip() + "," + countrycode.strip()
+            CITY = f'{newcity[0].strip()},{countrycode.strip()}'
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={APPID}"
     request = requests.get(url)
     result = json.loads(request.text)
     if request.status_code != 200:
-        return await eor(city, f"`Invalid country.`")
+        return await eor(city, "`Invalid country.`")
     DEFCITY = CITY
     cityname = result["name"]
     country = result["sys"]["country"]
@@ -164,9 +163,7 @@ async def set_default_city(city):
 @hell_cmd(pattern="wttr ([\s\S]*)")
 async def _(event):
     global DEFCITY
-    reply_to_id = None
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or None
     input_str = event.pattern_match.group(1)
     cid = await client_id(event)
     hell_mention = cid[2]

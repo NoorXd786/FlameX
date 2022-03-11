@@ -26,10 +26,7 @@ PM_WARNS = {}
 PREV_REPLY_MESSAGE = {}
 
 mybot = Config.BOT_USERNAME
-if mybot.startswith("@"):
-    botname = mybot
-else:
-    botname = f"@{mybot}"
+botname = mybot if mybot.startswith("@") else f"@{mybot}"
 LOG_GP = Config.LOGGER_ID
 USER_BOT_WARN_ZERO = "Enough Of Your Flooding In My Master's PM!! \n\n**🚫 Blocked and Reported**"
 
@@ -52,32 +49,32 @@ def button(page, modules):
         pairs.append([modules[-1]])
     max_pages = ceil(len(pairs) / Row)
     pairs = [pairs[i : i + Row] for i in range(0, len(pairs), Row)]
-    buttons = []
-    for pairs in pairs[page]:
-        buttons.append(
-            [
-                custom.Button.inline(f"{hell_emoji} " + pair + f" {hell_emoji}", data=f"Information[{page}]({pair})")
-                for pair in pairs
-            ]
-        )
+    buttons = [
+        [
+            custom.Button.inline(
+                f"{hell_emoji} {pair}" + f" {hell_emoji}",
+                data=f"Information[{page}]({pair})",
+            )
+            for pair in pairs
+        ]
+        for pairs in pairs[page]
+    ]
 
     buttons.append(
         [
             custom.Button.inline(
-               f"◀️ Back {hell_emoji}", data=f"page({(max_pages - 1) if page == 0 else (page - 1)})"
+                f"◀️ Back {hell_emoji}",
+                data=f"page({(max_pages - 1) if page == 0 else (page - 1)})",
             ),
+            custom.Button.inline("• ❌ •", data="close"),
             custom.Button.inline(
-               f"• ❌ •", data="close"
-            ),
-            custom.Button.inline(
-               f"{hell_emoji} Next ▶️", data=f"page({0 if page == (max_pages - 1) else page + 1})"
+                f"{hell_emoji} Next ▶️",
+                data=f"page({0 if page == (max_pages - 1) else page + 1})",
             ),
         ]
     )
+
     return [max_pages, buttons]
-
-
-    modules = CMD_HELP
 if Config.BOT_USERNAME is not None and tgbot is not None:
     @tgbot.on(InlineQuery)
     async def inline_handler(event):
@@ -92,10 +89,8 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
             veriler = button(0, sorted(CMD_HELP))
             apn = []
             for x in CMD_LIST.values():
-                for y in x:
-                    apn.append(y)
-            a = gvarstat("HELP_PIC")
-            if a:
+                apn.extend(iter(x))
+            if a := gvarstat("HELP_PIC"):
                 help_pic = a.split(" ")[0]
             else:
                 help_pic = "https://telegra.ph/file/3a48c5756d2a9763eafaf.jpg"
@@ -136,8 +131,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
             if a:
                 b = a.split(" ")
                 if len(b) >= 1:
-                    for c in b:
-                        pic_list.append(c)
+                    pic_list.extend(iter(b))
                 PIC = random.choice(pic_list)
             else:
                 PIC = "https://telegra.ph/file/ea9e11f7c9db21c1b8d5e.mp4"
@@ -175,8 +169,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
             if a:
                 b = a.split(" ")
                 if len(b) >= 1:
-                    for c in b:
-                        pic_list.append(c)
+                    pic_list.extend(iter(b))
                 PIC = random.choice(pic_list)
             else:
                 PIC = "https://telegra.ph/file/58df4d86400922aa32acd.jpg"
@@ -214,16 +207,25 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
                     ],
                     link_preview=False,
                 )
-                
+
         elif event.query.user_id in auth and query == "repo":
             result = builder.article(
                 title="Repository",
-                text=f"**⚡ ʟɛɢɛռɖaʀʏ ᴀғ ɦɛʟʟɮօt ⚡**",
+                text="**⚡ ʟɛɢɛռɖaʀʏ ᴀғ ɦɛʟʟɮօt ⚡**",
                 buttons=[
-                    [Button.url("📑 Repo 📑", "https://github.com/The-HellBot/HellBot")],
-                    [Button.url("HellBot Netwprk", "https://t.me/hellbot_network")],
+                    [
+                        Button.url(
+                            "📑 Repo 📑", "https://github.com/The-HellBot/HellBot"
+                        )
+                    ],
+                    [
+                        Button.url(
+                            "HellBot Netwprk", "https://t.me/hellbot_network"
+                        )
+                    ],
                 ],
             )
+
 
         elif query.startswith("http"):
             part = query.split(" ")
@@ -285,7 +287,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
             reply_pop_up_alert = "This is for other users!"
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
         else:
-            await event.edit(f"As you wish. **BLOCKED !!**")
+            await event.edit("As you wish. **BLOCKED !!**")
             await H1(functions.contacts.BlockRequest(event.query.user_id))
             target = await event.client(GetFullUserRequest(event.query.user_id))
             first_name = html.escape(target.user.first_name)
@@ -305,8 +307,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
             veriler = button(0, sorted(CMD_HELP))
             apn = []
             for x in CMD_LIST.values():
-                for y in x:
-                    apn.append(y)
+                apn.extend(iter(x))
             await event.edit(
                 f"🔰 **{hell_mention}**\n\n📜 __No.of Plugins__ : `{len(CMD_HELP)}` \n🗂️ __Commands__ : `{len(apn)}`\n🗒️ __Page__ : 1/{veriler[0]}",
                 buttons=simp[1],
@@ -339,8 +340,7 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
         veriler = button(page, CMD_HELP)
         apn = []
         for x in CMD_LIST.values():
-            for y in x:
-                apn.append(y)
+            apn.extend(iter(x))
         if event.query.user_id in auth:
             await event.edit(
                 f"🔰 **{hell_mention}**\n\n📜 __No.of Plugins__ : `{len(CMD_HELP)}`\n🗂️ __Commands__ : `{len(apn)}`\n🗒️ __Page__ : {page + 1}/{veriler[0]}",
@@ -360,9 +360,12 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
         commands = event.data_match.group(2).decode("UTF-8")
         try:
             buttons = [
-                custom.Button.inline("⚡ " + cmd[0] + " ⚡", data=f"commands[{commands}[{page}]]({cmd[0]})")
+                custom.Button.inline(
+                    f"⚡ {cmd[0]} ⚡", data=f"commands[{commands}[{page}]]({cmd[0]})"
+                )
                 for cmd in CMD_HELP_BOT[commands]["commands"].items()
             ]
+
         except KeyError:
             return await event.answer("No Description is written for this plugin", cache_time=0, alert=True)
 
@@ -387,15 +390,11 @@ if Config.BOT_USERNAME is not None and tgbot is not None:
         page = int(event.data_match.group(2).decode("UTF-8"))
         commands = event.data_match.group(3).decode("UTF-8")
         result = f"**📗 File :**  `{cmd}`\n"
-        if CMD_HELP_BOT[cmd]["info"]["info"] == "":
-            if not CMD_HELP_BOT[cmd]["info"]["warning"] == "":
-                result += f"**⚠️ Warning :**  {CMD_HELP_BOT[cmd]['info']['warning']}\n"
-        else:
-            if not CMD_HELP_BOT[cmd]["info"]["warning"] == "":
-                result += f"**⚠️ Warning :**  {CMD_HELP_BOT[cmd]['info']['warning']}\n"
+        if CMD_HELP_BOT[cmd]["info"]["warning"] != "":
+            result += f"**⚠️ Warning :**  {CMD_HELP_BOT[cmd]['info']['warning']}\n"
+        if CMD_HELP_BOT[cmd]["info"]["info"] != "":
             result += f"**ℹ️ Info :**  {CMD_HELP_BOT[cmd]['info']['info']}\n"
-        sextraa = CMD_HELP_BOT[cmd]["extra"]
-        if sextraa:
+        if sextraa := CMD_HELP_BOT[cmd]["extra"]:
             a = sorted(sextraa.keys())
             for b in a:
                 c = b

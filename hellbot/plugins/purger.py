@@ -62,9 +62,9 @@ async def purgeme(event):
         await message.delete()
 
     smsg = await event.client.send_message(
-        event.chat_id,
-        "**Self Purge Complete!** Purged  `" + str(count) + "`  messages.",
+        event.chat_id, f"**Self Purge Complete!** Purged  `{count}`  messages."
     )
+
     await event.client.send_message(
         lg_id, "#PURGE \nSelf Purged  `" + str(count) + "`  messages."
     )

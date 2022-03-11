@@ -16,7 +16,7 @@ from . import *
 async def get_full_user(event):  
     args = event.pattern_match.group(1).split(':', 1)
     extra = None
-    if event.reply_to_msg_id and not len(args) == 2:
+    if event.reply_to_msg_id and len(args) != 2:
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.sender_id)
         extra = event.pattern_match.group(1)
@@ -39,7 +39,7 @@ async def get_full_user(event):
         try:
             user_obj = await event.client.get_entity(user)
         except Exception as err:
-            return await eor(event, f"**ERROR !!**\n\n`{str(err)}`")           
+            return await eor(event, f"**ERROR !!**\n\n`{str(err)}`")
     return user_obj, extra
 
 
@@ -61,7 +61,7 @@ async def _(event):
     sender = await event.get_sender()
     me = await event.client.get_me()
     hell = await eor(event, "`Promoting globally...`")
-    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
+    my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     f"@{me.username}" if me.username else my_mention
     await event.get_chat()
     if event.is_private:
@@ -100,7 +100,7 @@ async def _(event):
           except:
              pass
     else:
-        await hell.edit(f"**Reply to a user !!**")
+        await hell.edit("**Reply to a user !!**")
     await hell.edit(
         f"[{user.first_name}](tg://user?id={user.id}) **Was Promoted Globally In** `{i}` **Chats !!**"
     )
@@ -113,7 +113,7 @@ async def _(event):
     sender = await event.get_sender()
     me = await event.client.get_me()
     hell = await eor(event, "`Demoting Globally...`")
-    my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
+    my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     f"@{me.username}" if me.username else my_mention
     await event.get_chat()
     if event.is_private:
@@ -152,7 +152,7 @@ async def _(event):
           except:
              pass
     else:
-        await hell.edit(f"**Reply to a user !!**")
+        await hell.edit("**Reply to a user !!**")
     await hell.edit(
         f"[{user.first_name}](tg://user?id={user.id}) **Was Demoted Globally In** `{i}` **Chats !!**"
     )
@@ -161,7 +161,7 @@ async def _(event):
 
 @hell_cmd(pattern="gban(?:\s|$)([\s\S]*)")
 async def _(event):
-    hell = await eor(event, f"`Gbanning ...`")
+    hell = await eor(event, "`Gbanning ...`")
     reason = ""
     cid = await client_id(event)
     ForGo10God, HELL_USER, hell_mention = cid[0], cid[1], cid[2]
@@ -211,8 +211,7 @@ async def _(event):
     pic_str = []
     if a:
         b = a.split(" ")
-        for c in b:
-            pic_str.append(c)
+        pic_str.extend(iter(b))
         gbpic = random.choice(pic_str)
     else:
         gbpic = cjb
@@ -295,11 +294,11 @@ async def _(event):
                         user.id,
                         view_messages=False,
                     )
-                    gban_watcher += f"**🔥 Action 🔥**  \n`Banned this piece of shit....` **AGAIN!**"
+                    gban_watcher += "**🔥 Action 🔥**  \\n`Banned this piece of shit....` **AGAIN!**"
                 except BaseException:
                     pass
             else:
-                gban_watcher += f"Reported to @admins"
+                gban_watcher += "Reported to @admins"
             await event.reply(gban_watcher)
 
 if H2:
@@ -317,11 +316,11 @@ if H2:
                             user.id,
                             view_messages=False,
                         )
-                        gban_watcher += f"**🔥 Action 🔥**  \n`Banned this piece of shit....` **AGAIN!**"
+                        gban_watcher += "**🔥 Action 🔥**  \\n`Banned this piece of shit....` **AGAIN!**"
                     except BaseException:
                         pass
                 else:
-                    gban_watcher += f"Reported to @admins"
+                    gban_watcher += "Reported to @admins"
                 await event.reply(gban_watcher)
 
 if H3:
@@ -339,11 +338,11 @@ if H3:
                             user.id,
                             view_messages=False,
                         )
-                        gban_watcher += f"**🔥 Action 🔥**  \n`Banned this piece of shit....` **AGAIN!**"
+                        gban_watcher += "**🔥 Action 🔥**  \\n`Banned this piece of shit....` **AGAIN!**"
                     except BaseException:
                         pass
                 else:
-                    gban_watcher += f"Reported to @admins"
+                    gban_watcher += "Reported to @admins"
                 await event.reply(gban_watcher)
 
 if H4:
@@ -361,11 +360,11 @@ if H4:
                             user.id,
                             view_messages=False,
                         )
-                        gban_watcher += f"**🔥 Action 🔥**  \n`Banned this piece of shit....` **AGAIN!**"
+                        gban_watcher += "**🔥 Action 🔥**  \\n`Banned this piece of shit....` **AGAIN!**"
                     except BaseException:
                         pass
                 else:
-                    gban_watcher += f"Reported to @admins"
+                    gban_watcher += "Reported to @admins"
                 await event.reply(gban_watcher)
 
 if H5:
@@ -383,11 +382,11 @@ if H5:
                             user.id,
                             view_messages=False,
                         )
-                        gban_watcher += f"**🔥 Action 🔥**  \n`Banned this piece of shit....` **AGAIN!**"
+                        gban_watcher += "**🔥 Action 🔥**  \\n`Banned this piece of shit....` **AGAIN!**"
                     except BaseException:
                         pass
                 else:
-                    gban_watcher += f"Reported to @admins"
+                    gban_watcher += "Reported to @admins"
                 await event.reply(gban_watcher)
 
 
@@ -395,7 +394,7 @@ if H5:
 async def gkick(event):
     cid = await client_id(event)
     ForGo10God, HELL_USER, hell_mention = cid[0], cid[1], cid[2]
-    hell = await eor(event, f"`Kicking globally ...`")
+    hell = await eor(event, "`Kicking globally ...`")
     reply = await event.get_reply_message()
     if event.reply_to_msg_id:
         userid = (await event.get_reply_message()).sender_id
@@ -423,8 +422,7 @@ async def gkick(event):
     pic_str = []
     if a:
         b = a.split(" ")
-        for c in b:
-            pic_str.append(c)
+        pic_str.extend(iter(b))
         gbpic = random.choice(pic_str)
     else:
         gbpic = cjb

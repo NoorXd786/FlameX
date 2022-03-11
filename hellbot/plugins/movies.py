@@ -13,7 +13,7 @@ async def _(event):
     hel_ = await eor(event, "`Processing ...`")
     try:
         hell = event.pattern_match.group(1)
-        await hel_.edit("__Searching for__ `{}`".format(hell))
+        await hel_.edit(f"__Searching for__ `{hell}`")
         # Credits to catuserbot.
         # Ported to Hellbot and beautifications by @ForGo10God.
         movies = imdb.search_movie(hell)
@@ -89,7 +89,7 @@ async def _(event):
         if len(rtext) > 1024:
             extralimit = len(rtext) - 1024
             climit = len(resulttext) - extralimit - 20
-            resulttext = resulttext[:climit] + "...........</i>"
+            resulttext = f'{resulttext[:climit]}...........</i>'
         if imageurl:
             downloader = SmartDL(imageurl, moviepath, progress_bar=False)
             downloader.start(blocking=False)
@@ -145,9 +145,9 @@ async def _(event):
 
     output_ = f"**Movie:**\n`{title}`\n**Release Date:**\n`{release_date}`"
     if imdb_score:
-        output_ = output_ + f"\n**IMDB: **{imdb_score}"
+        output_ = f"{output_}\n**IMDB: **{imdb_score}"
     if tmdb_score:
-        output_ = output_ + f"\n**TMDB: **{tmdb_score}"
+        output_ = f"{output_}\n**TMDB: **{tmdb_score}"
 
     output_ = output_ + "\n\n**Available on:**\n"
     for provider, link in stream_providers.items():

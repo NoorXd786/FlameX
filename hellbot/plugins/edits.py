@@ -15,7 +15,7 @@ from . import *
 async def _(event):
     input_str = event.pattern_match.group(1)
     shiiinabot = "\u2060"
-    for i in range(601):
+    for _ in range(601):
         shiiinabot += "\u2060"
     try:
         await eor(event, shiiinabot)
@@ -26,8 +26,8 @@ async def _(event):
     await eor(event, typing_symbol)
     await asyncio.sleep(0.3)
     for character in input_str:
-        previous_text = previous_text + "" + character
-        typing_text = previous_text + "" + typing_symbol
+        previous_text = f'{previous_text}{character}'
+        typing_text = f'{previous_text}{typing_symbol}'
         try:
             await eor(event, typing_text)
         except Exception as e:
@@ -43,7 +43,7 @@ async def _(event):
 @hell_cmd(pattern="emoji ([\s\S]*)")
 async def _(event):
     animation_interval = 0.3
-    animation_ttl = range(0, 16)
+    animation_ttl = range(16)
     input_str = event.pattern_match.group(1)
     if input_str == "shrug":
         await eor(event, "¯\_(ツ)_/¯")
@@ -63,52 +63,52 @@ async def _(event):
             await hell.edit(animation_chars[i % 2])
 
 
-@hell_cmd(pattern=f"gendar$")
+@hell_cmd(pattern="gendar$")
 async def metoo(e):
     txt = random.choice(GENDER)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"shrug$")
+@hell_cmd(pattern="shrug$")
 async def metoo(e):
     txt = random.choice(SHRUG)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"dogge")
+@hell_cmd(pattern="dogge")
 async def metoo(e):
     txt = random.choice(DOG)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"mesed$")
+@hell_cmd(pattern="mesed$")
 async def metoo(e):
     txt = random.choice(SED)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"medead$")
+@hell_cmd(pattern="medead$")
 async def metoo(e):
     txt = random.choice(DEAD)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"confused$")
+@hell_cmd(pattern="confused$")
 async def metoo(e):
     txt = random.choice(CONFUSED)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"lobb$")
+@hell_cmd(pattern="lobb$")
 async def metoo(e):
     txt = random.choice(LOB)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"wut$")
+@hell_cmd(pattern="wut$")
 async def metoo(e):
     txt = random.choice(WTF)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"wavee$")
+@hell_cmd(pattern="wavee$")
 async def metoo(e):
     txt = random.choice(WAVING)
     await eor(e, txt)
     
-@hell_cmd(pattern=f"hehe$")
+@hell_cmd(pattern="hehe$")
 async def metoo(e):
     txt = random.choice(EMOTICONS)
     await eor(e, txt)

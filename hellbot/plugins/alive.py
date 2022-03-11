@@ -45,8 +45,7 @@ async def up(event):
     if a:
         b = a.split(" ")
         if len(b) >= 1:
-            for c in b:
-                pic_list.append(c)
+            pic_list.extend(iter(b))
         PIC = random.choice(pic_list)
     else:
         PIC = "https://telegra.ph/file/ea9e11f7c9db21c1b8d5e.mp4"

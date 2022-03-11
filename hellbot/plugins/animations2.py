@@ -9,7 +9,7 @@ from . import *
 @hell_cmd(pattern="indflag$")
 async def _(event):
     animation_interval = 0.1
-    animation_ttl = range(0, 36)
+    animation_ttl = range(36)
     await eor(event, "Hello")
     animation_chars = [
         "Indian Flag",
@@ -23,8 +23,8 @@ async def _(event):
 @hell_cmd(pattern="yo$")
 async def Ooo(e):
     t = "yo"
-    for j in range(15):
-        t = t[:-1] + "oo"
+    for _ in range(15):
+        t = f'{t[:-1]}oo'
         await e.edit(t)
 
 
@@ -143,8 +143,6 @@ async def _(event):
 
 @hell_cmd(pattern="kill$")
 async def _(event):
-    animation_interval = 2
-    animation_ttl = range(0, 11)
     if event.reply_to_msg_id:
         reply_message = await event.get_reply_message()
         replied_user = await event.client(GetFullUserRequest(reply_message.sender_id))
@@ -171,6 +169,8 @@ async def _(event):
                 "(￣ー￣) Mar gaya\n Madarchod\nLalalalalalala",
                 "**Target killed successfully nacho bc(°̥̥̥̥̥̥̥̥•̀.̫•́°̥̥̥̥̥̥̥)**",
             ]
+            animation_interval = 2
+            animation_ttl = range(11)
             for i in animation_ttl:
                 await asyncio.sleep(animation_interval)
                 await event.edit(animation_chars[i % 11])
@@ -298,10 +298,10 @@ async def _(event):
     await event.edit("EVERyBOdy iZ GangSTur UNtIL I ArRivE 🔥🔥🔥")
 
 
-@hell_cmd(pattern=f"bigoof$")
+@hell_cmd(pattern="bigoof$")
 async def _(event):
     animation_interval = 0.1
-    animation_ttl = range(0, 36)
+    animation_ttl = range(36)
     event = await eor(event, "┏━━━┓╋╋╋╋┏━━━┓ \n┃┏━┓┃╋╋╋╋┃┏━┓┃ \n┃┃╋┃┣┓┏┓┏┫┃╋┃┃ \n┃┃╋┃┃┗┛┗┛┃┃╋┃┃ \n┃┗━┛┣┓┏┓┏┫┗━┛┃ \n┗━━━┛┗┛┗┛┗━━━┛"
     )
     animation_chars = [
@@ -328,7 +328,7 @@ async def timer_blankx(e):
     )
     j = 10
     k = j
-    for j in range(j):
+    for _ in range(k):
         await e.edit(txt + str(k))
         k += 10
         await asyncio.sleep(1)
@@ -342,7 +342,7 @@ async def timer_blankx(e):
 @hell_cmd(pattern="unoob$")
 async def _(event):
     animation_interval = 0.5
-    animation_ttl = range(0, 9)
+    animation_ttl = range(9)
     event = await eor(event, "You Noob")
     animation_chars = [
         "EvErYbOdY",
@@ -363,7 +363,7 @@ async def _(event):
 @hell_cmd(pattern="menoob$")
 async def _(event):
     animation_interval = 0.5
-    animation_ttl = range(0, 9)
+    animation_ttl = range(9)
     event = await eor(event, "Me Noob")
     animation_chars = [
         "EvErYbOdY",
@@ -384,7 +384,7 @@ async def _(event):
 @hell_cmd(pattern="uproo$")
 async def _(event):
     animation_interval = 0.5
-    animation_ttl = range(0, 8)
+    animation_ttl = range(8)
     event = await eor(event, "You Pro")
     animation_chars = [
         "EvErYbOdY",
@@ -404,7 +404,7 @@ async def _(event):
 @hell_cmd(pattern="mepro$")
 async def _(event):
     animation_interval = 0.5
-    animation_ttl = range(0, 8)
+    animation_ttl = range(8)
     event = await eor(event, "Me Pro")
     animation_chars = [
         "EvErYbOdY",
@@ -424,7 +424,7 @@ async def _(event):
 @hell_cmd(pattern="thanos$")
 async def _(event):
     animation_interval = 0.3
-    animation_ttl = range(0, 16)
+    animation_ttl = range(16)
     event = await eor(event, "Thanos")
     animation_chars = [
         "JINGLE BELLS",

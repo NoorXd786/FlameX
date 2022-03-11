@@ -11,7 +11,7 @@ async def on_new_message(event):
     name = event.raw_text
     snips = sq.get_chat_blacklist(event.chat_id)
     for snip in snips:
-        pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
+        pattern = f"( |^|[^\\w]){re.escape(snip)}( |$|[^\\w])"
         if re.search(pattern, name, flags=re.IGNORECASE):
             try:
                 await event.delete()
@@ -96,9 +96,7 @@ async def on_add_black_list(event):
         sq.add_to_blacklist(event.chat_id, trigger.lower())
     await eor(
         event,
-        "Added {} triggers to the blacklist in the current chat".format(
-            len(to_blacklist)
-        ),
+        f"Added {len(to_blacklist)} triggers to the blacklist in the current chat",
     )
 
 

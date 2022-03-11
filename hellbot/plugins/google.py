@@ -166,8 +166,7 @@ async def gps(event):
         return await eod(event, "What should i find? Give me location.🤨")
     hell = await eor(event, "Finding😁")
     geolocator = Nominatim(user_agent="hellbot")
-    geoloc = geolocator.geocode(input_str)
-    if geoloc:
+    if geoloc := geolocator.geocode(input_str):
         lon = geoloc.longitude
         lat = geoloc.latitude
         await reply_to_id.reply(input_str, file=types.InputMediaGeoPoint(types.InputGeoPoint(lat, lon)))

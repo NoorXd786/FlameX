@@ -73,9 +73,7 @@ async def sett(event):
     val_ = hel_.split(" ")[1:]
     valu = " ".join(val_)
     hell = await eor(event, f"**Setting variable** `{var_}` **as** `{valu}`")
-    if var_ == "":
-        return await hell.edit(f"**Invalid Syntax !!** \n\nTry: `{hl}svar VARIABLE_NAME variable_value`")
-    elif valu == "":
+    if var_ == "" or valu == "":
         return await hell.edit(f"**Invalid Syntax !!** \n\nTry: `{hl}svar VARIABLE_NAME variable_value`")
     if var_ not in config_list:
         return await hell.edit(f"__There isn't any variable named__ `{var_}`. __Check spelling or get full list by__ `{hl}vars`")
@@ -138,12 +136,10 @@ async def variable(hell):
                 if Config.ABUSE == "ON":
                     await event.client.send_file(hell.chat_id, cjb, caption=cap)
                     await event.delete()
-                    await event.client.send_message(lg_id, f"#HEROKU_VAR \n\n`{heroku_var[variable]}`")
-                    return
                 else:
                     await event.edit(f"**{capn}**")
-                    await event.client.send_message(lg_id, f"#HEROKU_VAR \n\n`{heroku_var[variable]}`")
-                    return
+                await event.client.send_message(lg_id, f"#HEROKU_VAR \n\n`{heroku_var[variable]}`")
+                return
             if variable in heroku_var:
                 return await event.edit(
                     "**Heroku Var** :" f"\n\n`{variable}` = `{heroku_var[variable]}`\n"
@@ -207,11 +203,10 @@ async def variable(hell):
         variable = xvar.upper()
         if variable in config_list:
             return await event.edit(f"This is a SQL based variable. Do `{hl}dvar {variable}` to delete it.")
-        if variable in heroku_var:
-            await event.edit(f"**Successfully Deleted** \n`{variable}`")
-            del heroku_var[variable]
-        else:
+        if variable not in heroku_var:
             return await event.edit(f"`{variable}`  **does not exists**")
+        await event.edit(f"**Successfully Deleted** \n`{variable}`")
+        del heroku_var[variable]
 
 
 @hell_cmd(pattern="usage$")
@@ -228,7 +223,7 @@ async def dyno_usage(hell):
         "Authorization": f"Bearer {Config.HEROKU_API_KEY}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
-    path = "/accounts/" + user_id + "/actions/get-quota"
+    path = f"/accounts/{user_id}/actions/get-quota"
     r = requests.get(heroku_api + path, headers=headers)
     if r.status_code != 200:
         return await event.edit(

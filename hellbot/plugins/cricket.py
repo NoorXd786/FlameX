@@ -11,9 +11,7 @@ async def _(event):
     page = urllib.request.urlopen(score_page)
     soup = BeautifulSoup(page, "html.parser")
     result = soup.find_all("description")
-    final = ""
-    for match in result:
-        final += match.get_text() + "\n\n"
+    final = "".join(match.get_text() + "\n\n" for match in result)
     await eor(event, f"<b><i><u>Match information gathered successful</b></i></u>\n\n<code>{final}</code>", parse_mode="HTML")
 
 
