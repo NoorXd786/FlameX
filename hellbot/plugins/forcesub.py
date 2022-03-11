@@ -11,7 +11,7 @@ from . import *
 
 @H1.on(events.ChatAction())
 async def forcesub(event):
-    if all_fsub() == None:
+    if all_fsub() is None:
         return
     if not (event.user_joined or event.user_added):
         return
@@ -29,10 +29,12 @@ async def forcesub(event):
         await event.client.edit_permissions(event.chat_id, user.id, send_messages=False)
         channel = await event.client.get_entity(int(joinchat))
         user = await event.client.get_entity(int(user.id))
-        if not channel.username:
-            channel_link = (await event.client(ExportChatInviteRequest(channel))).link
-        else:
-            channel_link = "https://t.me/" + channel.username
+        channel_link = (
+            f"https://t.me/{channel.username}"
+            if channel.username
+            else (await event.client(ExportChatInviteRequest(channel))).link
+        )
+
         capt = f"**👋 Welcome** [{user.first_name}](tg://user?id={user.id}), \n\n**📍 You need to Join** {channel.title} **to chat in this group.**"
         btns = [Button.url("Channel", url=channel_link), Button.inline("Unmute Me", data=f"unmute_{user.id}")]
         await tbot.send_message(event.chat_id, capt, buttons=btns)
@@ -65,11 +67,10 @@ async def _(event):
 
 @hell_cmd(pattern="rmfsub$")
 async def removef(event):
-    if is_fsub(event.chat_id):
-        rm_fsub(event.chat_id)
-        await eor(event, "Deactivated **Force Subscribe** In This Channel !!")
-    else:
+    if not is_fsub(event.chat_id):
         return await eod(event, "I don't think force sub was activated here.")
+    rm_fsub(event.chat_id)
+    await eor(event, "Deactivated **Force Subscribe** In This Channel !!")
     
 
 @hell_cmd(pattern="chfsub$")
@@ -115,14 +116,6 @@ async def _(event):
             await H1(GetParticipantRequest(int(joinchat), uid))
         except Exception:
             await H2(GetParticipantRequest(int(joinchat), uid))
-        except Exception:
-            await H3(GetParticipantRequest(int(joinchat), uid))
-        except Exception:
-            await H4(GetParticipantRequest(int(joinchat), uid))
-        except Exception:
-            await H5(GetParticipantRequest(int(joinchat), uid))
-        except Exception:
-            await tbot(GetParticipantRequest(int(joinchat), uid))
         except UserNotParticipantError:
             await event.answer("You need to join the channel first.", alert=True)
             return
@@ -130,17 +123,6 @@ async def _(event):
             await H1.edit_permissions(event.chat.id, uid, until_date=None, send_messages=True)
         except Exception:
             await H2.edit_permissions(event.chat.id, uid, until_date=None, send_messages=True)
-        except Exception:
-            await H3.edit_permissions(event.chat.id, uid, until_date=None, send_messages=True)
-        except Exception:
-            await H4.edit_permissions(event.chat.id, uid, until_date=None, send_messages=True)
-        except Exception:
-            await H5.edit_permissions(event.chat.id, uid, until_date=None, send_messages=True)
-        except Exception:
-            await tbot.edit_permissions(event.chat.id, uid, until_date=None, send_messages=True)
-        except Exception as e:
-            print(str(e))
-            return
         msg = f"**Hello {nm} !! Welcome to {(await event.get_chat()).title} ✨**"
         await event.edit(msg)
     else:

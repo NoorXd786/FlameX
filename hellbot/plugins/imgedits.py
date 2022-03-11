@@ -19,7 +19,7 @@ async def fun(event):
     reply = await event.get_reply_message()
     lol = await event.client.download_media(reply.media, path)
     file_name = "fishy.jpg"
-    hehe = path + "/" + file_name
+    hehe = f'{path}/{file_name}'
     img = cv2.imread(lol)
     H,W = img.shape[:2]
     fps = 30
@@ -47,7 +47,7 @@ async def fun(event):
     reply = await event.get_reply_message()
     lol = await event.client.download_media(reply.media, path)
     file_name = "warped.jpg"
-    hehe = path + "/" + file_name
+    hehe = f'{path}/{file_name}'
     img = cv2.imread(lol)
     H,W = img.shape[:2]
     fps = 30
@@ -75,7 +75,7 @@ async def fun(event):
     reply = await event.get_reply_message()
     lol = await event.client.download_media(reply.media, path)
     file_name = "dist.jpg"
-    hehe = path + "/" + file_name
+    hehe = f'{path}/{file_name}'
     img = cv2.imread(lol)
     H,W = img.shape[:2]
     fps = 30

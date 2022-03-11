@@ -96,7 +96,7 @@ async def canon(event):
         paste = await telegraph_paste(f"📃 Fillers List For “ {list_[0]} ”", msg)
         await nub.edit(f"**📃 Filler Episode List For [“ {list_[0]} ”]({paste}) !!**")
         return
-    hellbot = f"**📃 Filler Episode Lists :** \n\n"
+    hellbot = "**📃 Filler Episode Lists :** \\n\\n"
     for i in list_:
         result = parse_filler(hel_.get(i))
         msg = ""

@@ -405,9 +405,7 @@ async def pin(event):
         await eor(event, "🥴 Reply to a message to pin it.")
         return
     options = event.pattern_match.group(1)
-    is_silent = True
-    if options.lower() == "loud":
-        is_silent = False
+    is_silent = options.lower() != "loud"
     try:
         await event.client.pin_message(event.to_id, to_pin, notify=is_silent)
     except BadRequestError:
@@ -423,7 +421,7 @@ async def pin(event):
             f"CHAT: {event.chat.title}(`{event.chat_id}`)\n"
             f"LOUD: {not is_silent}",
         )
-    elif event.is_private:
+    else:
         await eod(event, "**📍 Pinned successfully !!**")
 
 
@@ -445,7 +443,7 @@ async def unpin(event):
                 await event.client.send_message(lg_id, f"#UNPIN \n\n**Chat :** {event.chat.title} (`{event.chat_id}`) \n**Message :** [Here](https://t.me/c/{ms_l.id}/{rply})")
         elif options == "all":
             await event.client.unpin_message(event.chat_id)
-            await eod(event, f"**Unpinned all pinned msgs.**")
+            await eod(event, "**Unpinned all pinned msgs.**")
             if not event.is_private:
                 await event.client.send_message(lg_id, f"#UNPIN \n\n**Chat :** {event.chat.title} (`{event.chat_id}`) \n**Messages :** __All__")
         else:
@@ -475,7 +473,7 @@ async def kick(event):
         await event.client.kick_participant(event.chat_id, user.id)
         await sleep(0.5)
     except Exception as e:
-        await hellevent.edit(NO_PERM + f"\n`{str(e)}`")
+        await hellevent.edit(f"{NO_PERM}\n`{str(e)}`")
         return
     if reason:
         await hellevent.edit(

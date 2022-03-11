@@ -17,7 +17,7 @@ async def spammer(event):
     if counter > 100:
         return await eor(event, f"To spam more than 100 times use: \n`{hl}bigspam {counter} {spam_message}`")
     hell = await eor(event, f"Spamming {counter} times...")
-    for i in range(counter):
+    for _ in range(counter):
         await event.client.send_message(event.chat_id, spam_message, reply_to=reply_message)
     await hell.delete()
     await event.client.send_message(lg_id, f"#SPAM \n\nSpammed  `{counter}`  messages!!")
@@ -27,11 +27,8 @@ async def bigspam(event):
     msg_ = event.text[9:]
     hellbot_count = int(msg_.split(" ")[0])
     reply_msg = await event.get_reply_message()
-    if reply_msg:
-        hell_spam = reply_msg
-    else:
-        hell_spam = msg_.replace(str(hellbot_count), "")
-    for i in range(hellbot_count):
+    hell_spam = reply_msg or msg_.replace(str(hellbot_count), "")
+    for _ in range(hellbot_count):
         await event.client.send_message(event.chat_id, hell_spam)
     await event.delete()
     await event.client.send_message(lg_id, f"#BIGSPAM \n\nBigspammed  `{hell_count}`  messages !!")
@@ -43,7 +40,7 @@ async def spammer(event):
     counter = int(input_str.split(" ", 2)[1])
     spam_message = str(input_str.split(" ", 2)[2])
     await event.delete()
-    for i in range(counter):
+    for _ in range(counter):
         await event.client.send_message(event.chat_id, spam_message)
         await asyncio.sleep(spamDelay)
     await event.client.send_message(lg_id, f"#DELAYSPAM \n\nSpammed `{counter}`  messages with delay of `{spamDelay}` seconds!!")
@@ -52,10 +49,7 @@ async def spammer(event):
 async def _(event):
     reply_msg = await event.get_reply_message()
     hell = event.text[7:]
-    if reply_msg:
-        input_str = reply_msg
-    else:
-        input_str = hell
+    input_str = reply_msg or hell
     await event.client.send_message(lg_id, f"#UNLIMITED_SPAM \n\nStarted Unlimited Spam. Will spam till floodwait. Do `{hl}restart` to stop.")
     x = 0
     while x < 69:
@@ -68,15 +62,12 @@ async def spammer(event):
     msg_ = event.text[7:]
     counter = int(msg_.split(" ")[0])
     reply_msg = await event.get_reply_message()
-    if reply_msg:
-        spam_message = reply_msg
-    else:
-        spam_message = msg_.replace(str(counter), "")
+    spam_message = reply_msg or msg_.replace(str(counter), "")
     rd = int(counter % 100)
     tot = int((counter - rd )/100)
     a = 30
-    for q in range(tot):
-        for p in range(100):
+    for _ in range(tot):
+        for _ in range(100):
             await event.client.send_message(event.chat_id, spam_message)
         a = a + 2
         await asyncio.sleep(a)
@@ -92,11 +83,10 @@ async def tiny_pic_spam(event):
             not reply_message
             or not event.reply_to_msg_id
             or not reply_message.media
-            or not reply_message.media
         ):
             return await event.edit("```Reply to a pic/sticker/gif/video message```")
         message = reply_message.media
-        for i in range(counter):
+        for _ in range(counter):
             await event.client.send_file(event.chat_id, message)
     except:
         return await event.reply(f"**Error**\nUsage `{hl}mspam <count> reply to a sticker/gif/photo/video`")

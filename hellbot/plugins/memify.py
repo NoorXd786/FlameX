@@ -111,10 +111,11 @@ async def nope(event):
         if event.is_reply:
             (await event.get_reply_message()).message
         else:
-            if Config.ABUSE == "ON":
-                return await eor(event, "Abe chumtiye kuch likhne ke liye de")
-            else:
-                return await eor(event, "Doge need some text to make sticker.")
+            return (
+                await eor(event, "Abe chumtiye kuch likhne ke liye de")
+                if Config.ABUSE == "ON"
+                else await eor(event, "Doge need some text to make sticker.")
+            )
 
     troll = await event.client.inline_query("DogeStickerBot", f"{(deEmojify(hell))}")
     if troll:
@@ -138,10 +139,13 @@ async def nope(event):
         if event.is_reply:
             (await event.get_reply_message()).message
         else:
-            if Config.ABUSE == "ON":
-                return await eor(event, "Abe chumtiye kuch likhne ke liye de")
-            else:
-                return await eor(event, "Googlax need some text to make sticker.")
+            return (
+                await eor(event, "Abe chumtiye kuch likhne ke liye de")
+                if Config.ABUSE == "ON"
+                else await eor(
+                    event, "Googlax need some text to make sticker."
+                )
+            )
 
     troll = await event.client.inline_query("GooglaxBot", f"{(deEmojify(hell))}")
     if troll:
@@ -165,10 +169,11 @@ async def nope(event):
         if event.is_reply:
             (await event.get_reply_message()).message
         else:
-            if Config.ABUSE == "ON":
-                return await eor(event, "Abe chumtiye kuch likhne ke liye de")
-            else:
-                return await eor(event, "Honka need some text to make sticker.")
+            return (
+                await eor(event, "Abe chumtiye kuch likhne ke liye de")
+                if Config.ABUSE == "ON"
+                else await eor(event, "Honka need some text to make sticker.")
+            )
 
     troll = await event.client.inline_query("honka_says_bot", f"{(deEmojify(hell))}.")
     if troll:
@@ -192,10 +197,11 @@ async def nope(event):
         if event.is_reply:
             (await event.get_reply_message()).message
         else:
-            if Config.ABUSE == "ON":
-                return await eor(event, "Abe chumtiye kuch likhne ke liye de")
-            else:
-                return await eor(event, "Need some text...")
+            return (
+                await eor(event, "Abe chumtiye kuch likhne ke liye de")
+                if Config.ABUSE == "ON"
+                else await eor(event, "Need some text...")
+            )
 
     troll = await event.client.inline_query("stickerizerbot", f"#12{(deEmojify(hell))}")
     if troll:

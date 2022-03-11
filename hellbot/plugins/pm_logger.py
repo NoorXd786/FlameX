@@ -41,12 +41,15 @@ async def monito_p_m_s(event):
     sender = await event.get_sender()
     if not sender.bot:
         chat = await event.get_chat()
-        if lg_id is not None:
-            if chat.id not in NO_PM_LOG_USERS and chat.id != ForGo10God:
-                try:
-                    await event.client.forward_messages(lg_id, event.message, silent=True)
-                except Exception as e:
-                    print(e)
+        if (
+            lg_id is not None
+            and chat.id not in NO_PM_LOG_USERS
+            and chat.id != ForGo10God
+        ):
+            try:
+                await event.client.forward_messages(lg_id, event.message, silent=True)
+            except Exception as e:
+                print(e)
 
 
 @hell_cmd(pattern="elog(?:\s|$)([\s\S]*)")
@@ -54,10 +57,9 @@ async def set_no_log_p_m(event):
     if Config.PM_LOG_ID is not None:
         event.pattern_match.group(1)
         chat = await event.get_chat()
-        if event.is_private:
-            if chat.id in NO_PM_LOG_USERS:
-                NO_PM_LOG_USERS.remove(chat.id)
-                await eod(event, "Will Log Messages from this chat")
+        if event.is_private and chat.id in NO_PM_LOG_USERS:
+            NO_PM_LOG_USERS.remove(chat.id)
+            await eod(event, "Will Log Messages from this chat")
 
 
 @hell_cmd(pattern="nlog(?:\s|$)([\s\S]*)")
@@ -65,10 +67,9 @@ async def set_no_log_p_m(event):
     if Config.PM_LOG_ID is not None:
         event.pattern_match.group(1)
         chat = await event.get_chat()
-        if event.is_private:
-            if chat.id not in NO_PM_LOG_USERS:
-                NO_PM_LOG_USERS.append(chat.id)
-                await eod(event, "Won't Log Messages from this chat")
+        if event.is_private and chat.id not in NO_PM_LOG_USERS:
+            NO_PM_LOG_USERS.append(chat.id)
+            await eod(event, "Won't Log Messages from this chat")
 
 
 CmdHelp("pm_logger").add_command(

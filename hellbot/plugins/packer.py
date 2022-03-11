@@ -7,9 +7,8 @@ from . import *
 @hell_cmd(pattern="unpack$")
 async def _(event):
     b = await event.client.download_media(await event.get_reply_message())
-    a = open(b, "r")
-    c = a.read()
-    a.close()
+    with open(b, "r") as a:
+        c = a.read()
     a = await eor(event, "**Unpacking...**")
     if len(c) > 4095:
         await a.edit("Telegram Word Limit Of **4095** words exceeded. \n**ABORTING PROCESS !!**")
@@ -23,9 +22,8 @@ async def _(event):
 async def _(event):
     a = await event.get_reply_message()
     input_str = event.pattern_match.group(1)
-    b = open(input_str, "w")
-    b.write(str(a.message))
-    b.close()
+    with open(input_str, "w") as b:
+        b.write(str(a.message))
     a = await eor(event, f"Packing into `{input_str}`")
     await asyncio.sleep(2)
     await a.edit(f"Uploading `{input_str}`")

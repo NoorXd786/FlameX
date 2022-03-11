@@ -38,9 +38,7 @@ async def download(event):
         end = datetime.datetime.now()
         ms = (end - start).seconds
         await event.delete()
-        await hellbot.edit(
-            "Downloaded to `{}` in {} seconds.".format(downloaded_file_name, ms)
-        )
+        await hellbot.edit(f"Downloaded to `{downloaded_file_name}` in {ms} seconds.")
         await hellbot.edit("Committing to Github....")
         await git_commit(downloaded_file_name, path, branch, hellbot)
 
@@ -62,12 +60,11 @@ async def git_commit(file_name, path, branch, hellbot):
         create_file = True
         if i == 'ContentFile(path="' + file_name + '")':
             return await hellbot.edit("`File Already Exists`")
-            create_file = False
-    path = path
     file_name = file_name
     if create_file == True:
         file_name = file_name.replace("./github/", "")
         print(file_name)
+        path = path
         try:
             repo.create_file(
                 path, f"Uploaded file {file_name} by Hêllẞø†", commit_data, branch=branch
@@ -88,7 +85,7 @@ async def git_commit(file_name, path, branch, hellbot):
 @hell_cmd(pattern="github(?:\s|$)([\s\S]*)")
 async def _(event):
     input_str = event.pattern_match.group(1)
-    url = "https://api.github.com/users/{}".format(input_str)
+    url = f"https://api.github.com/users/{input_str}"
     r = requests.get(url)
     if r.status_code != 404:
         b = r.json()
@@ -119,7 +116,7 @@ Profile Created: {}""".format(
         )
         await event.delete()
     else:
-        await eor(event, "`{}`: {}".format(input_str, r.text))
+        await eor(event, f"`{input_str}`: {r.text}")
 
 
 CmdHelp("github").add_command(

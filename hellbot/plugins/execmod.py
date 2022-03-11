@@ -35,15 +35,12 @@ async def _(event):
     else:
         await eor(
             event,
-            "https://www.fileext.com/ responded with {} for query: {}".format(
-                status_code, input_str
-            ),
+            f"https://www.fileext.com/ responded with {status_code} for query: {input_str}",
         )    
 
 @hell_cmd(pattern="pips(?:\s|$)([\s\S]*)")
 async def pipcheck(pip):
-    pipmodule = pip.pattern_match.group(1)
-    if pipmodule:
+    if pipmodule := pip.pattern_match.group(1):
         piip = await eor(pip, "`Searching . . .`")
         pipc = await asyncrunapp(
             "pip3",
@@ -54,14 +51,13 @@ async def pipcheck(pip):
         )
 
         stdout, stderr = await pipc.communicate()
-        pipout = str(stdout.decode().strip()) + str(stderr.decode().strip())
-
-        if pipout:
+        if pipout := str(stdout.decode().strip()) + str(
+            stderr.decode().strip()
+        ):
             if len(pipout) > 4096:
                 await piip.edit("`Output too large, sending as file`")
-                file = open("pips.txt", "w+")
-                file.write(pipout)
-                file.close()
+                with open("pips.txt", "w+") as file:
+                    file.write(pipout)
                 await pip.client.send_file(
                     pip.chat_id,
                     "pips.txt",

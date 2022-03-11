@@ -15,7 +15,7 @@ from glitch_this import ImageGlitcher
 
 from . import *
 
-Glitched = Config.TMP_DOWNLOAD_DIRECTORY + "glitch.gif"
+Glitched = f'{Config.TMP_DOWNLOAD_DIRECTORY}glitch.gif'
 
 
 @hell_cmd(pattern="glitch(?:\s|$)([\s\S]*)")

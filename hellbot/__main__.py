@@ -81,13 +81,14 @@ async def start_hellbot():
 
 bot.loop.run_until_complete(start_hellbot())
 
-if len(sys.argv) not in (1, 3, 4):
-    bot.disconnect()
-else:
+if len(sys.argv) in {1, 3, 4}:
     try:
         bot.run_until_disconnected()
     except ConnectionError:
         pass
+
+else:
+    bot.disconnect()
 
 
 # hellbot

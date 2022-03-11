@@ -61,11 +61,7 @@ async def _(message):
     event = await eor(message, "`droping....`")
     u, t, g, o, s, n = inp.split(), "🗑", "<(^_^ <)", "(> ^_^)>", "⠀ ", "\n"
     h = [(u[0], u[1], u[2]), (u[0], u[1], ""), (u[0], "", "")]
-    for something in reversed(
-        [
-            y
-            for y in (
-                [
+    for something in reversed([[
                     "".join(x)
                     for x in (
                         f + (s, g, s + s * f.count(""), t),
@@ -76,11 +72,7 @@ async def _(message):
                         f[:i] + (s * 3 + s * f.count(""), o, t),
                         f[:i] + (s * 3 + s * f.count(""), g, t),
                     )
-                ]
-                for i, f in enumerate(reversed(h))
-            )
-        ]
-    ):
+                ] for i, f in enumerate(reversed(h))]):
         for something_else in something:
             await asyncio.sleep(0.3)
             try:
@@ -202,7 +194,7 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
    
      
-@hell_cmd(pattern=f"wahack$")
+@hell_cmd(pattern="wahack$")
 async def _(event):
     animation_interval = 0.3
     animation_ttl = range(15)
@@ -333,7 +325,7 @@ async def _(event):
 @hell_cmd(pattern="phub$")
 async def _(event):
     animation_interval = 0.5
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
     await eor(event, "phub")
     animation_chars = [
         "P_",
@@ -353,7 +345,7 @@ async def _(event):
 @hell_cmd(pattern="amore$")
 async def _(event):
     animation_interval = 0.5
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
     await eor(event, "amore")
     animation_chars = [
         "A_",
@@ -372,7 +364,7 @@ async def _(event):
 @hell_cmd(pattern="sexy$")
 async def _(event):
     animation_interval = 0.5
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
     await eor(event, "Sexy")
     animation_chars = [
         "S_",
@@ -390,7 +382,7 @@ async def _(event):
 @hell_cmd(pattern="istar$")
 async def ammastar(hellstar):
     animation_interval = 2
-    animation_ttl = range(0, 11)
+    animation_ttl = range(11)
     await eor(hellstar, "I am A Star")
     animation_chars = [
         "I Party like a rockstar",
@@ -446,7 +438,7 @@ async def getwell(event):
 @hell_cmd(pattern="switch$")
 async def _(event):
     animation_interval = 0.5
-    animation_ttl = range(0, 11)
+    animation_ttl = range(11)
     await eor(event, "Switch")
     animation_chars = [
          "⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜[🔲](https://github.com/The-HellBot/HellBot)\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜\n⬜⬜⬜⬜⬜⬜⬜",
@@ -852,7 +844,7 @@ async def _(event):
 @hell_cmd(pattern="padmin ([\s\S]*)")
 async def _(event):
     animation_interval = 1
-    animation_ttl = range(0, 20)
+    animation_ttl = range(20)
     event = await eor(event, "padmin")
     animation_chars = [
         "**Promoting User As Admin...**",
@@ -887,7 +879,7 @@ async def _(event):
     xyz = await client_id(event)
     hell_mention = xyz[2]
     animation_interval = 2
-    animation_ttl = range(0, 12)
+    animation_ttl = range(12)
     event = await eor(event, "hack")
     animation_chars = [
         "**Connecting To Telegram Data Centre**",

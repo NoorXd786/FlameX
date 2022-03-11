@@ -11,7 +11,7 @@ async def install(event):
     chat = Config.PLUGIN_CHANNEL
     documentss = await event.client.get_messages(chat, None, filter=InputMessagesFilterDocument)
     total = int(documentss.total)
-    total_doxx = range(0, total)
+    total_doxx = range(total)
     hell_ = await eor(event, "Installing plugins from Plugin Channel...")
     hell = "**Installed Plugins :**\n\n"
     for ixo in total_doxx:
@@ -36,7 +36,7 @@ async def install(event):
     hell = f"**Installed Plugins From {chat} :**\n\n"
     documentss = await event.client.get_messages(chat, None, filter=InputMessagesFilterDocument)
     total = int(documentss.total)
-    total_doxx = range(0, total)
+    total_doxx = range(total)
     for ixo in total_doxx:
         mxo = documentss[ixo].id
         downloaded_file_name = await event.client.download_media(

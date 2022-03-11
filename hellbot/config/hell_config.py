@@ -8,6 +8,8 @@
 import os
 from telethon.tl.types import ChatBannedRights
 
+
+
 class Config(object):
     LOGGER = True
     ABUSE = os.environ.get("ABUSE", None)
@@ -17,10 +19,9 @@ class Config(object):
     AUTH_TOKEN_DATA = os.environ.get("AUTH_TOKEN_DATA", None)
     if AUTH_TOKEN_DATA != None:
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
-        t_file = open(TMP_DOWNLOAD_DIRECTORY+"auth_token.txt","w")
-        t_file.write(AUTH_TOKEN_DATA)
-        t_file.close()
-    BL_CHAT = set(int(x) for x in os.environ.get("BL_CHAT", "").split())
+        with open(f'{TMP_DOWNLOAD_DIRECTORY}auth_token.txt', "w") as t_file:
+            t_file.write(AUTH_TOKEN_DATA)
+    BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
     BOT_HANDLER = os.environ.get("BOT_HANDLER", "\/")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
     BOT_USERNAME = os.environ.get("BOT_USERNAME", None)
@@ -30,13 +31,11 @@ class Config(object):
     CHROME_DRIVER = os.environ.get("CHROME_DRIVER", "/app/.chromedriver/bin/chromedriver")
     DB_URI = os.environ.get("DATABASE_URL", None)
     EMOJI_IN_HELP = os.environ.get("EMOJI_IN_HELP", "✧")
-    FBAN_LOG_GROUP = os.environ.get("FBAN_LOG_GROUP", None)
-    if FBAN_LOG_GROUP:
+    if FBAN_LOG_GROUP := os.environ.get("FBAN_LOG_GROUP", None):
         FBAN_LOG_GROUP = int(FBAN_LOG_GROUP)
     G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
     G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
-    GBAN_LOG_GROUP = os.environ.get("GBAN_LOG_GROUP", None)
-    if GBAN_LOG_GROUP:
+    if GBAN_LOG_GROUP := os.environ.get("GBAN_LOG_GROUP", None):
         GBAN_LOG_GROUP = int(GBAN_LOG_GROUP)
     GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", None)
     GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", None)
@@ -49,8 +48,7 @@ class Config(object):
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
     INSTANT_BLOCK = os.environ.get("INSTANT_BLOCK", None)
     LOCATION = os.environ.get("LOCATION", None)
-    LOGGER_ID = os.environ.get("LOGGER_ID", None)
-    if LOGGER_ID:
+    if LOGGER_ID := os.environ.get("LOGGER_ID", None):
         LOGGER_ID = int(LOGGER_ID)
     MAX_ANTI_FLOOD_MESSAGES = 10
     MAX_MESSAGE_SIZE_LIMIT = 4095
@@ -58,11 +56,9 @@ class Config(object):
     MY_CHANNEL = os.environ.get("YOUR_CHANNEL", "Its_HellBot")
     MY_GROUP = os.environ.get("YOUR_GROUP", "HellBot_Chat")
     OCR_API = os.environ.get("OCR_API", None)
-    PLUGIN_CHANNEL = os.environ.get("PLUGIN_CHANNEL", None)
-    if PLUGIN_CHANNEL:
+    if PLUGIN_CHANNEL := os.environ.get("PLUGIN_CHANNEL", None):
         PLUGIN_CHANNEL = int(PLUGIN_CHANNEL)
-    PM_LOG_ID = os.environ.get("PM_LOG_ID", None)
-    if PM_LOG_ID:
+    if PM_LOG_ID := os.environ.get("PM_LOG_ID", None):
         PM_LOG_ID = int(PM_LOG_ID)
     PM_PERMIT = os.environ.get("PM_PERMIT", None)
     REMOVE_BG_API = os.environ.get("REMOVE_BG_API", None)
@@ -74,8 +70,7 @@ class Config(object):
     SESSION_5 = os.environ.get("SESSION_5", None)
     SUDO_HANDLER = os.environ.get("SUDO_HANDLER", ".")
     SUDO_USERS = []
-    TAG_LOGGER = os.environ.get("TAG_LOGGER", None)
-    if TAG_LOGGER: 
+    if TAG_LOGGER := os.environ.get("TAG_LOGGER", None):
         TAG_LOGGER = int(TAG_LOGGER)
     TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "HellBot")
     TEMP_DIR = os.environ.get("TEMP_DIR", None)
@@ -85,6 +80,7 @@ class Config(object):
     UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "https://github.com/The-HellBot/HellBot")
     WEATHER_API = os.environ.get("WEATHER_API", None)
     YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
+
 
 
 class Production(Config):

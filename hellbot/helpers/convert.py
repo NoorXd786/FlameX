@@ -48,9 +48,7 @@ async def convert_to_image(event, client):
         except Exception as e:  # pylint:disable=C0103,W0703
             await eor(event, str(e))
         else:
-            await eor(event,
-                "Downloaded to `{}` successfully.".format(downloaded_file_name)
-            )
+            await eor(event, f"Downloaded to `{downloaded_file_name}` successfully.")
     if not os.path.exists(downloaded_file_name):
         await eor(event, "Download Unsucessfull :(")
         return
@@ -65,7 +63,7 @@ async def convert_to_image(event, client):
         hell_final = image_name20
     elif hell.sticker and hell.sticker.mime_type == "image/webp":
         pathofsticker2 = downloaded_file_name
-        image_new_path = dwlpath + "image.png"
+        image_new_path = f'{dwlpath}image.png'
         im = Image.open(pathofsticker2)
         im.save(image_new_path, "PNG")
         if not os.path.exists(image_new_path):
@@ -74,8 +72,8 @@ async def convert_to_image(event, client):
         hell_final = image_new_path
     elif hell.audio:
         omk_p = downloaded_file_name
-        hmmyes = dwlpath + "semx.mp3"
-        imgpath = dwlpath + "semxy.jpg"
+        hmmyes = f'{dwlpath}semx.mp3'
+        imgpath = f'{dwlpath}semxy.jpg'
         os.rename(omk_p, hmmyes)
         await runcmd(f"ffmpeg -i {hmmyes} -filter:v scale=500:500 -an {imgpath}")
         os.remove(omk_p)
@@ -159,7 +157,7 @@ async def get_time(seconds: int) -> str:
     for x in range(hmm):
         time_list[x] = str(time_list[x]) + time_suffix_list[x]
     if len(time_list) == 4:
-        up_time += time_list.pop() + ", "
+        up_time += f'{time_list.pop()}, '
     time_list.reverse()
     up_time += ":".join(time_list)
     return up_time
@@ -168,10 +166,7 @@ async def get_time(seconds: int) -> str:
 async def VSticker(event, file):
     _width_ = file.file.width
     _height_ = file.file.height
-    if _height_ > _width_:
-        _height_, _width_ = (512, -1)
-    else:
-        _height_, _width_ = (-1, 512)
+    _height_, _width_ = (512, -1) if _height_ > _width_ else (-1, 512)
     _video = await event.client.download_media(file, dwlpath)
     await runcmd(f"ffmpeg -ss 00:00:00 -to 00:00:02.900 -i {_video} -vf scale={_width_}:{_height_} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an VideoSticker.webm")
     os.remove(_video)

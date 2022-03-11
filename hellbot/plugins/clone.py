@@ -62,7 +62,9 @@ async def _(event):
     await event.client(functions.account.UpdateProfileRequest(about=f"{bio}"))
     await event.client(functions.account.UpdateProfileRequest(first_name=f"{name}"))
     await eor(event, "Successfully reverted back..")
-    await event.client.send_message(Config.LOGGER_ID, f"#REVERT \n\n**Revert Successful**")
+    await event.client.send_message(
+        Config.LOGGER_ID, "#REVERT \\n\\n**Revert Successful**"
+    )
 
 
 async def get_full_user(event):
@@ -75,12 +77,11 @@ async def get_full_user(event):
                     or previous_message.forward.channel_id
                 )
             )
-            return replied_user, None
         else:
             replied_user = await event.client(
                 GetFullUserRequest(previous_message.sender_id)
             )
-            return replied_user, None
+        return replied_user, None
     else:
         input_str = None
         try:

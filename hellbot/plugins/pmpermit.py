@@ -78,12 +78,11 @@ if PM_ON_OFF != "DISABLE":
             return
         if str(event.chat_id) in DEVLIST:
             return
-        if not pm_sql.is_approved(event.chat_id):
-            if not event.chat_id in PM_WARNS:
-                pm_sql.approve(event.chat_id, "outgoing")
-                x = await event.client.send_message(event.chat_id, "**Auto Approved because outgoing message.**")
-                await asyncio.sleep(4)
-                await x.delete()
+        if not pm_sql.is_approved(event.chat_id) and event.chat_id not in PM_WARNS:
+            pm_sql.approve(event.chat_id, "outgoing")
+            x = await event.client.send_message(event.chat_id, "**Auto Approved because outgoing message.**")
+            await asyncio.sleep(4)
+            await x.delete()
 
 
     @H1.on(admin_cmd(pattern="(a|approve|allow)$"))
@@ -98,9 +97,7 @@ if PM_ON_OFF != "DISABLE":
                     await PREV_REPLY_MESSAGE[event.chat_id].delete()
                     del PREV_REPLY_MESSAGE[event.chat_id]
                 pm_sql.approve(event.chat_id, "Approved")
-                await eod(event,
-                    "Approved to pm [{}](tg://user?id={})".format(firstname, event.chat_id)
-                )
+                await eod(event, f"Approved to pm [{firstname}](tg://user?id={event.chat_id})")
             elif pm_sql.is_approved(event.chat_id):
                 await eod(event, 'Already In Approved List!!')
         elif event.is_group:
@@ -112,9 +109,11 @@ if PM_ON_OFF != "DISABLE":
                 replied_user = await event.client(GetFullUserRequest(reply_s.sender_id))
                 firstname = replied_user.user.first_name
                 pm_sql.approve(reply_s.sender_id, "Approved")
-                await eod(event,
-                        "Approved to pm [{}](tg://user?id={})".format(firstname, reply_s.sender_id)
-                    )
+                await eod(
+                    event,
+                    f"Approved to pm [{firstname}](tg://user?id={reply_s.sender_id})",
+                )
+
             elif pm_sql.is_approved(reply_s.sender_id):
                 await eod(event, 'User Already Approved !')
 
@@ -128,9 +127,11 @@ if PM_ON_OFF != "DISABLE":
                 return
             if pm_sql.is_approved(event.chat_id):
                 pm_sql.disapprove(event.chat_id)
-                await eod(event,
-                    "Disapproved User [{}](tg://user?id={})".format(firstname, event.chat_id)
+                await eod(
+                    event,
+                    f"Disapproved User [{firstname}](tg://user?id={event.chat_id})",
                 )
+
             elif not pm_sql.is_approved(event.chat_id):
                 await eod(event, "I don't think he was approved !!")
         elif event.is_group:
@@ -145,9 +146,11 @@ if PM_ON_OFF != "DISABLE":
                 replied_user = await event.client(GetFullUserRequest(reply_s.sender_id))
                 firstname = replied_user.user.first_name
                 pm_sql.disapprove(reply_s.sender_id)
-                await eod(event,
-                    "Disapproved User [{}](tg://user?id={})".format(firstname, reply_s.sender_id)
+                await eod(
+                    event,
+                    f"Disapproved User [{firstname}](tg://user?id={reply_s.sender_id})",
                 )
+
             elif not pm_sql.is_approved(reply_s.sender_id):
                 await eod(event, 'Not even in my approved list.')
 
@@ -223,8 +226,7 @@ if PM_ON_OFF != "DISABLE":
             if chat_ids in PREV_REPLY_MESSAGE:
                 await PREV_REPLY_MESSAGE[chat_ids].delete()
             PREV_REPLY_MESSAGE[chat_ids] = r
-            the_message = ""
-            the_message += "#BLOCK\n\n"
+            the_message = "" + "#BLOCK\n\n"
             the_message += f"[User](tg://user?id={chat_ids}): {chat_ids}\n"
             the_message += f"Message Counts: {PM_WARNS[chat_ids]}\n"
             try:

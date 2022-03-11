@@ -11,9 +11,8 @@ from . import *
 async def gethash(event):
     event = await eor(event, "Processing...")
     hashtxt_ = event.pattern_match.group(1)
-    hashtxt = open("hashdis.txt", "w+")
-    hashtxt.write(hashtxt_)
-    hashtxt.close()
+    with open("hashdis.txt", "w+") as hashtxt:
+        hashtxt.write(hashtxt_)
     md5 = runapp(["md5sum", "hashdis.txt"], stdout=PIPE)
     md5 = md5.stdout.decode()
     sha1 = runapp(["sha1sum", "hashdis.txt"], stdout=PIPE)
@@ -37,9 +36,8 @@ async def gethash(event):
         + "`"
     )
     if len(ans) > 4096:
-        hashfile = open("hashes.txt", "w+")
-        hashfile.write(ans)
-        hashfile.close()
+        with open("hashes.txt", "w+") as hashfile:
+            hashfile.write(ans)
         await event.client.send_file(
             event.chat_id,
             "hashes.txt",

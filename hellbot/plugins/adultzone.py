@@ -31,7 +31,10 @@ async def _(event):
         if link.endswith((".gif")):
             await unsave_gif(event, x)
     else:
-        await eor(event, f"**Unmatched argument.** \n\n__Get all the required queries for nekos here__ -> **[Nekos Queries](http://telegra.ph/Nekos-Queries-08-20)**")
+        await eor(
+            event,
+            "**Unmatched argument.** \\n\\n__Get all the required queries for nekos here__ -> **[Nekos Queries](http://telegra.ph/Nekos-Queries-08-20)**",
+        )
 
 
 CmdHelp("adultzone").add_command(

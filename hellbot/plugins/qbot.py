@@ -38,8 +38,7 @@ async def _(event):
         await event.client.send_message(event.chat_id, fourth, reply_to=reply_message)
     q_d = []
     async for qdel in event.client.iter_messages(chat, min_id=first.id):
-        q_d.append(first.id)
-        q_d.append(qdel)
+        q_d.extend((first.id, qdel))
         await event.client.delete_messages(conv.chat_id, q_d)
 
 

@@ -13,9 +13,7 @@ from . import *
 
 @hell_cmd(pattern="cmds$")
 async def kk(event):
-    reply_to_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or event.message.id
     cids = await client_id(event)
     ForGo10God, HELL_USER, hell_mention = cids[0], cids[1], cids[2]
     cmd = "ls hellbot/plugins"
@@ -51,7 +49,7 @@ async def send(event):
     thumb = hell_logo
     input_str = event.pattern_match.group(1)
     omk = f"**• Plugin name ≈** `{input_str}`\n**• Uploaded by ≈** {hell_mention}\n\n⚡ **[ʟɛɢɛռɖaʀʏ ᴀғ ɦɛʟʟɮօt]({chnl_link})** ⚡"
-    the_plugin_file = "./hellbot/plugins/{}.py".format(input_str)
+    the_plugin_file = f"./hellbot/plugins/{input_str}.py"
     if os.path.exists(the_plugin_file):
         lauda = await event.client.send_file(
             event.chat_id,
@@ -81,9 +79,8 @@ async def install(event):
                 "./hellbot/plugins/"  # pylint:disable=E0602
             )
             if owo != "-f":
-                op = open(downloaded_file_name, "r")
-                rd = op.read()
-                op.close()
+                with open(downloaded_file_name, "r") as op:
+                    rd = op.read()
                 try:
                     for harm in HARMFUL:
                         if harm in rd:
@@ -98,7 +95,7 @@ async def install(event):
                 if shortname in CMD_LIST:
                     string = "**Commands found in** `{}`\n".format((os.path.basename(downloaded_file_name)))
                     for i in CMD_LIST[shortname]:
-                        string += "  •  `" + i 
+                        string += f"  •  `{i}"
                         string += "`\n"
                         if b == 1:
                             a = "__Installing..__"
@@ -111,7 +108,11 @@ async def install(event):
                 return await hell.edit(f"Installed module `{os.path.basename(downloaded_file_name)}`")
             else:
                 os.remove(downloaded_file_name)
-                return await eod(hell, f"**Failed to Install** \n`Error`\nModule already installed or unknown format")
+                return await eod(
+                    hell,
+                    "**Failed to Install** \\n`Error`\\nModule already installed or unknown format",
+                )
+
         except Exception as e: 
             await eod(hell, f"**Failed to Install** \n`Error`\n{str(e)}")
             return os.remove(downloaded_file_name)

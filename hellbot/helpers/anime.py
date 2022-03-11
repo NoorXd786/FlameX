@@ -211,28 +211,26 @@ def search_filler(query):
             yum = jk.a["href"].split("/")[-1]
             cum = jk.text
             index[cum] = yum
-    ret = {}
     keys = list(index.keys())
-    for i in range(len(keys)):
-        if query.lower() in keys[i].lower():
-            ret[keys[i]] = index[keys[i]]
-    return ret
+    return {
+        keys[i]: index[keys[i]]
+        for i in range(len(keys))
+        if query.lower() in keys[i].lower()
+    }
 
 # parse the searched filler episodes
 def parse_filler(filler_id):
-    url = "https://www.animefillerlist.com/shows/" + filler_id
+    url = f"https://www.animefillerlist.com/shows/{filler_id}"
     html = requests.get(url).text
     soup = BeautifulSoup(html, "html.parser")
     div = soup.find("div", attrs={"id": "Condensed"})
     all_ep = div.find_all("span", attrs={"class": "Episodes"})
     if len(all_ep) == 1:
         ttl_ep = all_ep[0].findAll("a")
-        total_ep = []
         mix_ep = None
         filler_ep = None
         ac_ep = None
-        for tol in ttl_ep:
-            total_ep.append(tol.text)
+        total_ep = [tol.text for tol in ttl_ep]
         dict_ = {
             "filler_id": filler_id,
             "total_ep": ", ".join(total_ep),
@@ -244,14 +242,11 @@ def parse_filler(filler_id):
     if len(all_ep) == 2:
         ttl_ep = all_ep[0].findAll("a")
         fl_ep = all_ep[1].findAll("a")
-        total_ep = []
         mix_ep = None
         ac_ep = None
         filler_ep = []
-        for tol in ttl_ep:
-            total_ep.append(tol.text)
-        for fol in fl_ep:
-            filler_ep.append(fol.text)
+        total_ep = [tol.text for tol in ttl_ep]
+        filler_ep.extend(fol.text for fol in fl_ep)
         dict_ = {
             "filler_id": filler_id,
             "total_ep": ", ".join(total_ep),
@@ -264,16 +259,10 @@ def parse_filler(filler_id):
         ttl_ep = all_ep[0].findAll("a")
         mxl_ep = all_ep[1].findAll("a")
         fl_ep = all_ep[2].findAll("a")
-        total_ep = []
-        mix_ep = []
-        filler_ep = []
         ac_ep = None
-        for tol in ttl_ep:
-            total_ep.append(tol.text)
-        for fol in fl_ep:
-            filler_ep.append(fol.text)
-        for mol in mxl_ep:
-            mix_ep.append(mol.text)
+        total_ep = [tol.text for tol in ttl_ep]
+        filler_ep = [fol.text for fol in fl_ep]
+        mix_ep = [mol.text for mol in mxl_ep]
         dict_ = {
             "filler_id": filler_id,
             "total_ep": ", ".join(total_ep),
@@ -287,18 +276,10 @@ def parse_filler(filler_id):
         mxl_ep = all_ep[1].findAll("a")
         fl_ep = all_ep[2].findAll("a")
         al_ep = all_ep[3].findAll("a")
-        total_ep = []
-        mix_ep = []
-        filler_ep = []
-        ac_ep = []
-        for tol in ttl_ep:
-            total_ep.append(tol.text)
-        for fol in fl_ep:
-            filler_ep.append(fol.text)
-        for mol in mxl_ep:
-            mix_ep.append(mol.text)
-        for aol in al_ep:
-            ac_ep.append(aol.text)
+        total_ep = [tol.text for tol in ttl_ep]
+        filler_ep = [fol.text for fol in fl_ep]
+        mix_ep = [mol.text for mol in mxl_ep]
+        ac_ep = [aol.text for aol in al_ep]
         dict_ = {
             "filler_id": filler_id,
             "total_ep": ", ".join(total_ep),
@@ -325,8 +306,7 @@ def pos_no(no):
     x = ep_.pop()
     if ep_ != [] and ep_.pop()=='1':
         return 'th'
-    th = "st" if x == "1" else "nd" if x == "2" else "rd" if x == "3" else "th"
-    return th
+    return "st" if x == "1" else "nd" if x == "2" else "rd" if x == "3" else "th"
 
 # time stamp for airing
 def make_it_rw(time_stamp):
@@ -335,12 +315,13 @@ def make_it_rw(time_stamp):
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = (
-        ((str(days) + " Days, ") if days else "")
-        + ((str(hours) + " Hours, ") if hours else "")
-        + ((str(minutes) + " Minutes, ") if minutes else "")
-        + ((str(seconds) + " Seconds, ") if seconds else "")
-        + ((str(milliseconds) + " ms, ") if milliseconds else "")
+        (f'{str(days)} Days, ' if days else "")
+        + (f'{str(hours)} Hours, ' if hours else "")
+        + (f'{str(minutes)} Minutes, ' if minutes else "")
+        + (f'{str(seconds)} Seconds, ' if seconds else "")
+        + (f'{str(milliseconds)} ms, ' if milliseconds else "")
     )
+
     return tmp[:-2]
 
 # returns data in json
@@ -353,7 +334,7 @@ async def get_anilist(qdb, page):
     vars_ = {"search": ANIME_DB[qdb], "page": page}
     result = await return_json_senpai(PAGE_QUERY, vars_)
     if len(result['data']['Page']['media'])==0:
-        return [f"No results Found"]
+        return ["No results Found"]
     data = result["data"]["Page"]["media"][0]
     # pylint: disable=possibly-unused-variable
     chnl = "[†hê Hêllẞø†](https://t.me/Its_Hellbot)"
@@ -373,14 +354,10 @@ async def get_anilist(qdb, page):
     adult = data.get("isAdult")
     trailer_link = "N/A"
     gnrs = ", ".join(data['genres'])
-    gnrs_ = ""
-    if len(gnrs)!=0:
-        gnrs_ = f"\n**✘ GENRES :**  `{gnrs}`"
+    gnrs_ = f"\n**✘ GENRES :**  `{gnrs}`" if len(gnrs)!=0 else ""
     score = data['averageScore']
     avscd = f"\n**✘ SCORE :**  `{score}%` 🌟" if score is not None else ""
-    tags = []
-    for i in data['tags']:
-        tags.append(i["name"])
+    tags = [i["name"] for i in data['tags']]
     tags_ = f"\n**✘ TAGS :** `{', '.join(tags[:5])}`" if tags != [] else ""
     in_ls = False
     in_ls_id = ""
@@ -451,7 +428,7 @@ async def get_manga(qdb, page):
     vars_ = {"search": MANGA_DB[qdb], "asHtml": True, "page": page}
     result = await return_json_senpai(MANGA_QUERY, vars_)
     if len(result['data']['Page']['media'])==0:
-        return [f"No results Found"]
+        return ["No results Found"]
     data = result["data"]["Page"]["media"][0]
     # Data of all fields in returned json
     # pylint: disable=possibly-unused-variable
@@ -494,7 +471,7 @@ async def get_manga(qdb, page):
     finals_ += f"**✘ FORMAT :** `{format_}`\n"
     finals_ += f"**✘ SOURCE :** `{source}`\n"
     finals_ += f"**✘ DESCRIPTION :** [Synopsis]({paste})\n\n"
-    finals_ += f"\n       **<\>** [†hê Hêllẞø†](https://t.me/its_hellbot)"
+    finals_ += "\\n       **<\\>** [†hê Hêllẞø†](https://t.me/its_hellbot)"
     banner_ = requests.get(banner)
     open(f"{idm}.jpg", "wb").write(banner_.content)
     pic = f"{idm}.jpg"

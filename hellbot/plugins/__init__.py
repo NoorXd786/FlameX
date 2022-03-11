@@ -22,21 +22,12 @@ hell_ver = __hell__
 tel_ver = version.__version__
 
 async def get_user_id(ids):
-    if str(ids).isdigit():
-        userid = int(ids)
-    else:
-        userid = (await bot.get_entity(ids)).id
-    return userid
+    return int(ids) if str(ids).isdigit() else (await bot.get_entity(ids)).id
 
 is_sudo = "True" if gvarstat("SUDO_USERS") else "False"
 
 abus = Config.ABUSE
-if abus == "ON":
-    abuse_m = "Enabled"
-else:
-    abuse_m ="Disabled"
-
-
+abuse_m = "Enabled" if abus == "ON" else "Disabled"
 my_channel = Config.MY_CHANNEL or "Its_HellBot"
 my_group = Config.MY_GROUP or "HellBot_Chat"
 if "@" in my_channel:

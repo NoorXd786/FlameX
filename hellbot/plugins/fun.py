@@ -58,9 +58,8 @@ async def get_user(event):
 async def slap(replied_user, event):
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
-    username = replied_user.user.username
-    if username:
-        slapped = "@{}".format(username)
+    if username := replied_user.user.username:
+        slapped = f"@{username}"
     else:
         slapped = f"[{first_name}](tg://user?id={user_id})"
     cid = await client_id(event)
@@ -69,83 +68,84 @@ async def slap(replied_user, event):
     hit = random.choice(HIT)
     throw = random.choice(THROW)
     hell_mention = cid[2]
-    caption = temp.format(user1=hell_mention, user2=slapped, item=item, hits=hit, throws=throw)
-    return caption
+    return temp.format(
+        user1=hell_mention, user2=slapped, item=item, hits=hit, throws=throw
+    )
 
 
-@hell_cmd(pattern=f"randi$")
+@hell_cmd(pattern="randi$")
 async def rendi(e):
-   txt = random.choice(RENDISTR)
-   await eor(e, txt)
+    txt = random.choice(RENDISTR)
+    await eor(e, txt)
    
    
-@hell_cmd(pattern=f"habuse$")
+@hell_cmd(pattern="habuse$")
 async def thenus(e):
-   txt = random.choice(THANOS_STRINGS)
-   await eor(e, txt)
+    txt = random.choice(THANOS_STRINGS)
+    await eor(e, txt)
    
    
-@hell_cmd(pattern=f"fuk$")
+@hell_cmd(pattern="fuk$")
 async def tapatap(e):
-   txt = random.choice(FUK_STRINGS)
-   await eor(e, txt)
+    txt = random.choice(FUK_STRINGS)
+    await eor(e, txt)
    
    
-@hell_cmd(pattern=f"chu$")
+@hell_cmd(pattern="chu$")
 async def chut(e):
-   txt = random.choice(CHU_STRINGS)
-   await eor(e, txt)
+    txt = random.choice(CHU_STRINGS)
+    await eor(e, txt)
    
    
-@hell_cmd(pattern=f"noob$")
+@hell_cmd(pattern="noob$")
 async def nub(e):
-   txt = random.choice(NOOBSTR)
-   await eor(e, txt)
+    txt = random.choice(NOOBSTR)
+    await eor(e, txt)
 
 
-@hell_cmd(pattern=f"run$")
+@hell_cmd(pattern="run$")
 async def metoo(e):
     txt = random.choice(RUNSREACTS)
     await eor(e, txt)
 
 
-@hell_cmd(pattern=f"gali$")
+@hell_cmd(pattern="gali$")
 async def metoo(e):
     txt = random.choice(GAALI_STR)
     await eor(e, txt)
 
 
-@hell_cmd(pattern=f"rape$")
+@hell_cmd(pattern="rape$")
 async def metoo(e):
     txt = random.choice(RAPE_STRINGS)
     await eor(e, txt)
 
 
-@hell_cmd(pattern=f"abuse$")
+@hell_cmd(pattern="abuse$")
 async def metoo(e):
     txt = random.choice(ABUSE_STRINGS)
     await eor(e, txt)
 
 
-@hell_cmd(pattern=f"gey$")
+@hell_cmd(pattern="gey$")
 async def metoo(e):
     txt = random.choice(GEY_STRINGS)
     await eor(e, txt)
 
 
-@hell_cmd(pattern=f"piro$")
+@hell_cmd(pattern="piro$")
 async def metoo(e):
     txt = random.choice(PRO_STRINGS)
     await eor(e, txt)
 
 
-@hell_cmd(pattern=f"insult$")
+@hell_cmd(pattern="insult$")
 async def metoo(e):
     txt = random.choice(INSULT_STRINGS)
     await eor(e, txt)
 
 
-@hell_cmd(pattern=f"hiabuse$",)
+@hell_cmd(pattern="hiabuse$")
 async def metoo(e):
     txt = random.choice(HIABUSE_STR)
     await eor(e, txt)
@@ -159,56 +159,55 @@ async def cry(e):
 
 @hell_cmd(pattern="cp(?:\s|$)([\s\S]*)")
 async def copypasta(cp_e):
-    if not cp_e.text[0].isalpha() and cp_e.text[0] not in ("/", "#", "@", "!"):
-        textx = await cp_e.get_reply_message()
-        message = cp_e.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
+    if cp_e.text[0].isalpha() or cp_e.text[0] in ("/", "#", "@", "!"):
+        return
+    textx = await cp_e.get_reply_message()
+    message = cp_e.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await eor(cp_e, "`😂🅱️IvE👐sOME👅text👅for✌️Me👌tO👐MAkE👀iT💞funNy!💦`")
+        return
+    reply_text = random.choice(EMOJIS)
+    b_char = random.choice(message).lower()
+    for owo in message:
+        if owo == " ":
+            reply_text += random.choice(EMOJIS)
+        elif owo in EMOJIS:
+            reply_text += owo
+            reply_text += random.choice(EMOJIS)
+        elif owo.lower() == b_char:
+            reply_text += "🅱️"
         else:
-            await eor(cp_e, "`😂🅱️IvE👐sOME👅text👅for✌️Me👌tO👐MAkE👀iT💞funNy!💦`")
-            return
-        reply_text = random.choice(EMOJIS)
-        b_char = random.choice(message).lower()
-        for owo in message:
-            if owo == " ":
-                reply_text += random.choice(EMOJIS)
-            elif owo in EMOJIS:
-                reply_text += owo
-                reply_text += random.choice(EMOJIS)
-            elif owo.lower() == b_char:
-                reply_text += "🅱️"
-            else:
-                if bool(random.getrandbits(1)):
-                    reply_text += owo.upper()
-                else:
-                    reply_text += owo.lower()
-        reply_text += random.choice(EMOJIS)
-        await eor(cp_e, reply_text)
+            reply_text += owo.upper() if bool(random.getrandbits(1)) else owo.lower()
+    reply_text += random.choice(EMOJIS)
+    await eor(cp_e, reply_text)
 
 
 @hell_cmd(pattern="owo(?:\s|$)([\s\S]*)")
 async def faces(owo):
-    if not owo.text[0].isalpha() and owo.text[0] not in ("/", "#", "@", "!"):
-        textx = await owo.get_reply_message()
-        message = owo.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
-        else:
-            await eor(owo, "` UwU no text given! `")
-            return
+    if owo.text[0].isalpha() or owo.text[0] in ("/", "#", "@", "!"):
+        return
+    textx = await owo.get_reply_message()
+    message = owo.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await eor(owo, "` UwU no text given! `")
+        return
 
-        reply_text = re.sub(r"(r|l)", "w", message)
-        reply_text = re.sub(r"(R|L)", "W", reply_text)
-        reply_text = re.sub(r"n([aeiou])", r"ny\1", reply_text)
-        reply_text = re.sub(r"N([aeiouAEIOU])", r"Ny\1", reply_text)
-        reply_text = re.sub(r"\!+", " " + random.choice(UWUS), reply_text)
-        reply_text = reply_text.replace("ove", "uv")
-        reply_text += " " + random.choice(UWUS)
-        await eor(owo, reply_text)
+    reply_text = re.sub(r"(r|l)", "w", message)
+    reply_text = re.sub(r"(R|L)", "W", reply_text)
+    reply_text = re.sub(r"n([aeiou])", r"ny\1", reply_text)
+    reply_text = re.sub(r"N([aeiouAEIOU])", r"Ny\1", reply_text)
+    reply_text = re.sub(r"\!+", f" {random.choice(UWUS)}", reply_text)
+    reply_text = reply_text.replace("ove", "uv")
+    reply_text += f" {random.choice(UWUS)}"
+    await eor(owo, reply_text)
 
 
 @hell_cmd(pattern="react$")
@@ -218,25 +217,26 @@ async def react_meme(react):
 
 @hell_cmd(pattern="clap(?:\s|$)([\s\S]*)")
 async def claptext(memereview):
-    if not memereview.text[0].isalpha() and memereview.text[0] not in (
+    if memereview.text[0].isalpha() or memereview.text[0] in (
         "/",
         "#",
         "@",
         "!",
     ):
-        textx = await memereview.get_reply_message()
-        message = memereview.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
-        else:
-            await eor(memereview, "`Hah, I don't clap pointlessly!`")
-            return
-        reply_text = "👏 "
-        reply_text += message.replace(" ", " 👏 ")
-        reply_text += " 👏"
-        await eor(memereview, reply_text)
+        return
+    textx = await memereview.get_reply_message()
+    message = memereview.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await eor(memereview, "`Hah, I don't clap pointlessly!`")
+        return
+    reply_text = "👏 "
+    reply_text += message.replace(" ", " 👏 ")
+    reply_text += " 👏"
+    await eor(memereview, reply_text)
 
 
 CmdHelp("fun").add_command(
