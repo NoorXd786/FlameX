@@ -204,7 +204,7 @@ async def _(event):
             await mone.edit(str(e))
     elif input_str:
         directory_name = input_str
-        await mone.edit(f'Local file compressed to `{directory_name + ".7z"}`')
+        await mone.edit(f'Local file compressed to `{directory_name}.7z`')
 
 
 @hell_cmd(pattern="tar ([\s\S]*)")
