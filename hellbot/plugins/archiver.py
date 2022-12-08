@@ -204,7 +204,7 @@ async def _(event):
             await mone.edit(str(e))
     elif input_str:
         directory_name = input_str
-        await mone.edit(f'Local file compressed to `{directory_name + ".7z"}`')
+        await mone.edit(f'Local file compressed to `{directory_name}.7z`')
 
 
 @hell_cmd(pattern="tar ([\s\S]*)")
@@ -482,7 +482,26 @@ async def _(event):
             ms = (end - start).seconds
             await mone.edit(f"Stored the tar to `{downloaded_file_name}` in {ms} seconds.")
         with tarfile.TarFile.open(downloaded_file_name, "r") as tar_file:
-            tar_file.extractall(path=extracted)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar_file, path=extracted)
         filename = sorted(get_lst_of_files(extracted, []))
         await mone.edit("Untarring now")
         for single_file in filename:
